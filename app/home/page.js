@@ -7,15 +7,15 @@ import { Alert } from '@mui/material';
 import Slide from '@mui/material/Slide';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const page = () => {
-  const Router = useRouter();
+const Page = () => {
+  const router = useRouter();
 
   //functions
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
   const handlebackClick = () => {
-    Router.back()
+    router.back()
   }
 
   const handleContinueClick = () => {
@@ -36,7 +36,12 @@ const page = () => {
         // Router.push(`/home/cards?selectedPlanIndex=${selectedPlanIndex}`)
         console.log('Selected plan index is:', selectedPlanIndex);
         setLoading(true)
-        Router.push(`/home/cards?selectedPlanIndex=${selectedPlanIndex}`);
+        // const newParams = new URLSearchParams(searchParams);
+        // newParams.set('data', JSON.stringify({ key: 'value' })); // Example data
+        // setSearchParams(newParams, { replace: true });
+        // Router.push(`/home/cards?selectedPlanIndex=${selectedPlanIndex}`);
+        localStorage.setItem('plan', JSON.stringify({ planIndex: selectedPlanIndex }));
+        router.push(`/home/cards`);
       } else {
         setError(true)
         console.log('Select a plan');
@@ -223,4 +228,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
