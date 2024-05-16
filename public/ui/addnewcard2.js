@@ -116,7 +116,7 @@ function Addnewcard2(props) {
                         // props.oncardAdded()
                         // props.closePopup()
 
-                        Router.push('/home/cards')
+                        router.push('/home/cards')
                     }
                     else {
                         //console.log( data.data)
@@ -162,9 +162,9 @@ function Addnewcard2(props) {
 
 
     //code for moving back to cards screen
-    const Router = useRouter();
+    const router = useRouter();
     const handleBackclick = () => {
-        Router.back('')
+        router.back('')
     }
 
     return (

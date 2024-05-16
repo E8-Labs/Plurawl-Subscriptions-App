@@ -1,5 +1,5 @@
 'use client'
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -58,10 +58,10 @@ const Page = () => {
 
     //code for logout user
 
-    const Router = useRouter();
+    const router = useRouter();
     const handleLogoutClick = () => {
         localStorage.removeItem('user');
-        Router.push('/');
+        router.push('/');
         console.log('Data is removed');
     }
 

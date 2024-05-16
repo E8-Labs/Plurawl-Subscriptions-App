@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 
 
-const page = () => {
+const Page = () => {
 
   //pk_test_51JfmvpC2y2Wr4BecD5qeIqkwOaNCMScIgL6TdhNQNoFdNkMbqKhSn3xjrC5K9X483QuMApm7h8uAnjcDW7XMqHmy00vHYLByuW
   let stripePublickKey = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Production" ? process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY
@@ -24,4 +24,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

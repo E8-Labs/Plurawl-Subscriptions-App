@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, Suspense } from 'react'
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import { Elements } from '@stripe/react-stripe-js';
@@ -15,7 +15,7 @@ const stripePromise = loadStripe(stripePublickKey);
 
 const Page = () => {
 
-  const Router = useRouter()
+  const router = useRouter()
 
   //code to call login api
 
@@ -45,7 +45,7 @@ const Page = () => {
             JSON.stringify(data.data),
             console.log("Data stored on local storage is", data.data)
           )
-          Router.push('/home')
+          router.push('/home')
         } else {
           console.log('Couldnot login bcz', data.message)
           setError(true)
@@ -75,7 +75,7 @@ const Page = () => {
       if (ProfileData) {
         const Status = ProfileData.user.plan.plan;
         if (Status.active === true) {
-          Router.replace('/home/cards/subscriptioncompleted')
+          router.replace('/home/cards/subscriptioncompleted')
         }
       } else {
         console.log('Usernot loged in')
@@ -85,44 +85,46 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '350px', gap: 150, display: 'flex', flexDirection: 'column' }}>
-        <div className="text-lg	font-semibold" style={{ color: 'white', marginTop: 20 }}>
-          Enter email and password
-        </div>
-        <Snackbar
-          open={error}
-          autoHideDuration={5000}
-          onClose={handleClose1}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          TransitionComponent={Slide}
-          TransitionProps={{
-            direction: 'left'
-          }}
-        >
-          <Alert onClose={handleClose1} severity="success" sx={{ width: '50%' }}>
-            {snackMessage}
-          </Alert>
-        </Snackbar>
-        <div>
-          <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <input onChange={(e) => setEmail(e.target.value)} className='w-5/6 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10 }} type="email" placeholder="Enter Email" />
-            <input onChange={(e) => setPassword(e.target.value)} className='w-5/6 mt-4 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10 }} type="password" placeholder="Enter Password" />
-            <div>
-            </div>
-            <div>
-              <button className='font-semibold' onClick={handleSigninclick} style={{ color: 'white', backgroundColor: 'red', height: '50px', width: '100px', borderRadius: 5, marginTop: 30 }}>
-                {loading ? <div style={{ height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CircularProgress sx={{ height: '30px' }} /></div> : 'Sign in'}
-              </button>
-            </div>
-          </form>
-        </div>
+    // <Suspense>
+      <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '350px', gap: 150, display: 'flex', flexDirection: 'column' }}>
+          <div className="text-lg	font-semibold" style={{ color: 'white', marginTop: 20 }}>
+            Enter email and password
+          </div>
+          <Snackbar
+            open={error}
+            autoHideDuration={5000}
+            onClose={handleClose1}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+            TransitionComponent={Slide}
+            TransitionProps={{
+              direction: 'left'
+            }}
+          >
+            <Alert onClose={handleClose1} severity="success" sx={{ width: '50%' }}>
+              {snackMessage}
+            </Alert>
+          </Snackbar>
+          <div>
+            <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+              <input onChange={(e) => setEmail(e.target.value)} className='w-5/6 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10 }} type="email" placeholder="Enter Email" />
+              <input onChange={(e) => setPassword(e.target.value)} className='w-5/6 mt-4 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10 }} type="password" placeholder="Enter Password" />
+              <div>
+              </div>
+              <div>
+                <button className='font-semibold' onClick={handleSigninclick} style={{ color: 'white', backgroundColor: 'red', height: '50px', width: '100px', borderRadius: 5, marginTop: 30 }}>
+                  {loading ? <div style={{ height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CircularProgress sx={{ height: '30px' }} /></div> : 'Sign in'}
+                </button>
+              </div>
+            </form>
+          </div>
 
+        </div>
       </div>
-    </div>
+    // </Suspense>
   )
 }
 
