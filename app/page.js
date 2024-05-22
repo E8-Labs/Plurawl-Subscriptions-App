@@ -30,7 +30,7 @@ const Page = () => {
     event.preventDefault();
     try {
       setloading(true)
-      const api = 'http://13.58.134.250:8003/api/users/login';
+      const api = 'https://plurawlapp.com/plurawl/api/users/login';
       const response = await fetch(api, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

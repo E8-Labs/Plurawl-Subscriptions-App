@@ -93,7 +93,7 @@ const Page = () => {
         console.log('Data to send in api', ProfileData.amount)
         try {
             setLoading(true);
-            const apiUrl2 = 'http://13.58.134.250:8003/api/users/cancel_subscription';
+            const apiUrl2 = 'https://plurawlapp.com/plurawl/api/users/cancel_subscription';
             const USERPROFILEDATA = localStorage.getItem('user');
             const UPD = JSON.parse(USERPROFILEDATA);
             console.log('Data of localstorage is', UPD.user.plan.canceled_at);

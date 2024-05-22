@@ -46,7 +46,7 @@ const[plan, setPlan] = useState(null)
         const getCards = async () => {
             try {
                 setCardLoading(true)
-                const apiUrl = 'http://13.58.134.250:8003/api/users/load_cards';
+                const apiUrl = 'https://plurawlapp.com/plurawl/api/users/load_cards';
                 const data = localStorage.getItem('user')
                 const d = JSON.parse(data);
                 const response = await fetch(apiUrl, {
@@ -113,7 +113,7 @@ const[plan, setPlan] = useState(null)
                 console.log('Select card')
             } else {
                 event.preventDefault();
-                const apiUrl = 'http://13.58.134.250:8003/api/users/subscribe';
+                const apiUrl = 'https://plurawlapp.com/plurawl/api/users/subscribe';
                 const userDeatils2 = localStorage.getItem('user');
                 const S = JSON.parse(userDeatils2)
                 const response = await fetch(apiUrl, {
