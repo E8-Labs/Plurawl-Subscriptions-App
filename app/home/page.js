@@ -177,7 +177,7 @@ const Page = () => {
                     </div>
                   </div>
                   <div style={{ fontSize: 17, fontWeight: '600' }}>
-                    $50 <span style={{ fontSize: 13, color: '#F8EDDA50' }}>/ HalfYear</span>
+                    $99.99 <span style={{ fontSize: 13, color: '#F8EDDA50' }}>/ HalfYear</span>
                   </div>
                 </div>
 
@@ -199,7 +199,7 @@ const Page = () => {
                     </div>
                   </div>
                   <div style={{ fontSize: 17, fontWeight: '600' }}>
-                    $100 <span style={{ fontSize: 13, color: '#F8EDDA50' }}>/ Year</span>
+                    $179.99 <span style={{ fontSize: 13, color: '#F8EDDA50' }}>/ Year</span>
                   </div>
                 </div>
 

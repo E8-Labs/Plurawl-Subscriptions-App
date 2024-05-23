@@ -95,7 +95,7 @@ function Addnewcard2(props) {
                     }
                     //console.log("Token obtained " + tok.id)
 
-                    const apiUrl = 'http://13.58.134.250:8003/api/users/add_card';
+                    const apiUrl = 'https://plurawlapp.com/plurawl/api/users/add_card';
                     const userDetails = localStorage.getItem('user')
                     const i = JSON.parse(userDetails)
                     let config = {
