@@ -106,7 +106,7 @@ function Addnewcard2(props) {
                     //console.log("Token obtained " + tok.id)
 
                     // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/add_card';
-                    let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+                    let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
                     const apiUrl = api + '/api/users/add_card';
                     const userDetails = localStorage.getItem('user')
                     const i = JSON.parse(userDetails)

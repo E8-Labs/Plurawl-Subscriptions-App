@@ -37,7 +37,7 @@ const Page = () => {
             // setLoading(true);
             event.preventDefault();
             // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/subscribe';
-            let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+            let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
                 const apiUrl = api + '/api/users/subscribe';
             const userDeatils2 = localStorage.getItem('user');
             const S = JSON.parse(userDeatils2);
@@ -78,7 +78,7 @@ const Page = () => {
             // setLoading(true);
             event.preventDefault();
             // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/subscribe';
-            let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+            let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
             const apiUrl = api + '/api/users/subscribe';
             const userDeatils2 = localStorage.getItem('user');
             const S = JSON.parse(userDeatils2);
