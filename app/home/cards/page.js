@@ -51,7 +51,9 @@ const Page = () => {
         const getCards = async () => {
             try {
                 setCardLoading(true)
-                const apiUrl = 'https://plurawlapp.com/plurawl/api/users/load_cards';
+                
+                let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+                const apiUrl = api + '/api/users/load_cards';
                 const data = localStorage.getItem('user')
                 const d = JSON.parse(data);
                 const response = await fetch(apiUrl, {

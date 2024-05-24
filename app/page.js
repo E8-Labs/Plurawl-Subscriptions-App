@@ -31,7 +31,7 @@ const Page = () => {
     event.preventDefault();
     try {
       setloading(true)
-      const api = 'https://plurawlapp.com/plurawl/api/users/login';
+      const api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app/api/users/login" : "https://plurawlapp.com/plurawl/api/users/login";
       const response = await fetch(api, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -73,7 +73,8 @@ const Page = () => {
     const getProfile = async () => {
       try {
           // setCardLoading(true)
-          const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
+          // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
+          const apiUrl = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl/api/users/get_profile";
           const data = localStorage.getItem('user')
           const d = JSON.parse(data);
           const response = await fetch(apiUrl, {

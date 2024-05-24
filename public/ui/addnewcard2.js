@@ -83,9 +83,9 @@ function Addnewcard2(props) {
             stripeReact.createToken(card).then(async function (tok) {
                 // Handle result.error or result.token
                 console.log("result creating token")
-                console.log("token found is",tok) //contains a card object as well
+                console.log("token found is", tok) //contains a card object as well
                 //working until here
-                 if (tok.error) {
+                if (tok.error) {
                     console.log("Error ", tok.error)
                     //console.log(tok.error)
                     toast.error(tok.error.message, {
@@ -105,7 +105,9 @@ function Addnewcard2(props) {
                     }
                     //console.log("Token obtained " + tok.id)
 
-                    const apiUrl = 'https://plurawlapp.com/plurawl/api/users/add_card';
+                    // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/add_card';
+                    let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+                    const apiUrl = api + '/api/users/add_card';
                     const userDetails = localStorage.getItem('user')
                     const i = JSON.parse(userDetails)
                     let config = {
@@ -139,7 +141,7 @@ function Addnewcard2(props) {
                         });
                     }
                 }
-                
+
             });
 
 
@@ -167,7 +169,7 @@ function Addnewcard2(props) {
     const handleBackclick = () => {
         router.back('')
     }
-   // some update
+    // some update
     return (
         <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
 

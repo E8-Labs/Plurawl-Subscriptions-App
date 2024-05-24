@@ -21,7 +21,9 @@ const Page = () => {
     useEffect(() => {
         const getProfile = async () => {
             try {
-                const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
+                // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
+                let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+            const apiUrl = api + '/api/users/get_profile';
                 const profileData = localStorage.getItem('user');
                 const P = JSON.parse(profileData);
                 const response = await fetch(apiUrl, {
@@ -93,7 +95,9 @@ const Page = () => {
         console.log('Data to send in api', ProfileData.amount)
         try {
             setLoading(true);
-            const apiUrl2 = 'https://plurawlapp.com/plurawl/api/users/cancel_subscription';
+            // const apiUrl2 = 'https://plurawlapp.com/plurawl/api/users/cancel_subscription';
+            let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+            const apiUrl2 = api + '/api/users/cancel_subscription';
             const USERPROFILEDATA = localStorage.getItem('user');
             const UPD = JSON.parse(USERPROFILEDATA);
             console.log('Data of localstorage is', UPD.user.plan.canceled_at);
