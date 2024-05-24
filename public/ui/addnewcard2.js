@@ -167,7 +167,7 @@ function Addnewcard2(props) {
     const handleBackclick = () => {
         router.back('')
     }
-
+   // some update
     return (
         <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
 
