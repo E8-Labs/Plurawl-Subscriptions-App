@@ -11,6 +11,7 @@ const Page = () => {
 
     const [plan, setPlan] = useState(null);
     const [NoCards, setNoCards] = useState(false);
+    const [addCardLoading, setAddCardLoading] = useState(false);
 
     //code to close snackbar
     const handleClose = () => {
@@ -22,7 +23,15 @@ const Page = () => {
         router.back('')
     }
     const handleAddcard = () => {
-        router.push('/home/addnewcard')
+        try {
+            setAddCardLoading(true)
+            router.push('/home/addnewcard')
+        } catch (error) {
+            console.log('Some error')
+        } finally {
+            setCardLoading(false)
+        }
+
     }
 
     // const [isSelected, setIsselected] = useState([])
@@ -71,8 +80,11 @@ const Page = () => {
                         const i = cards;
                         setCarddetail(i.data || [])
                         console.log('Data of api is', i)
+                        if (cards.data.length === 0) {
+                            setNoCards(true)
+                        }
                     } else {
-                        NoCards(true)
+                        setNoCards(true)
                     }
                 } else {
                     console.log('Error')
@@ -164,7 +176,8 @@ const Page = () => {
     const handleNextClick = () => {
         if (selectedItemId === null) {
             //add snack message
-            console.log('Select card')
+            setError(true);
+            console.log('Select card');
         } else {
             let p = plan;
             p.selectedCard = selectedItemId;
@@ -189,11 +202,17 @@ const Page = () => {
                         Select Card
                     </div>
                     <div>
-                        <button onClick={handleAddcard}>
-                            <div style={{ height: '40px', width: '40px', backgroundColor: '#ffffff80', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' />
-                            </div>
-                        </button>
+                        {
+                            CardLoading ?
+                                <div style={{ height: '20px', width: '20px' }}>
+                                    <CircularProgress />
+                                </div> :
+                                <button onClick={handleAddcard}>
+                                    <div style={{ height: '40px', width: '40px', backgroundColor: '#ffffff80', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' />
+                                    </div>
+                                </button>
+                        }
                     </div>
                 </div>
 
@@ -212,13 +231,13 @@ const Page = () => {
                         direction: 'left'
                     }}
                 >
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '50%' }}>
-                        Select a Plan
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '75%' }}>
+                        Add Card for further processing
                     </Alert>
                 </Snackbar>
 
                 {NoCards ?
-                    <div style={{ fontWeight: '500', fontSize: 22, marginTop: 20 }}>
+                    <div style={{ fontWeight: '500', fontSize: 22, marginTop: 20, textAlign : 'center' }}>
                         No Card Available
                     </div> :
                     <div>

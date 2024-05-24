@@ -1,7 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 
 const Page = () => {
 
@@ -23,7 +22,7 @@ const Page = () => {
             try {
                 // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
                 let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
-            const apiUrl = api + '/api/users/get_profile';
+                const apiUrl = api + '/api/users/get_profile';
                 const profileData = localStorage.getItem('user');
                 const P = JSON.parse(profileData);
                 const response = await fetch(apiUrl, {
@@ -36,19 +35,41 @@ const Page = () => {
                 if (response.ok) {
                     const DATA = await response.json();
                     const Result = DATA.data.plan.plan;
-                    const PlanSt = DATA.data
+                    const PlanSt = DATA.data;
+                    console.log('Plan is', PlanSt)
                     if (PlanSt.plan.plan.active === true) {
                         if (PlanSt.plan.status === "canceled") {
-                            setHideUnsubscribeBtn(true)
+
+                            router.push('/home')
+
+
+                        } else if (PlanSt.plan.plan.active === true) {
+                            if (PlanSt.plan.cancel_at_period_end === true) {
+                                setPlanStatus()
+                                setHideUnsubscribeBtn(true)
+
+                                //pick this code
+                                let unix_timestamp = PlanSt.plan.canceled_at; // Time when plan ends Unix timestamp
+                                // console.log('Value for time is', unix_timestampa)
+                                // console.log('Value i am using is 1716488518')
+                                // let unix_timestamp = 1716488518;
+                                const date = new Date(unix_timestamp * 1000);
+                                const year = date.getFullYear();
+                                const month = date.getMonth() + 1; // Adding 1 since January is 0
+                                const day = date.getDate();
+                                const formattedDate = day + '-' + month + '-' + year;
+                                // setEndtime(formattedDate)
+                                setShowCancelTime(formattedDate);
+                                console.log(formattedDate);
+                            }
                         }
                     } else {
-                        console.log('error')
+                        console.log('erstatus is not active')
                     }
                     console.log('Data recieved fron profile api is', Result);
                     //remove
                     console.log('Plansttsua is', PlanSt.plan.canceled_at)
                     setProfileData(Result);
-                    setPlanStatus(PlanSt.plan.canceled_at)
                 }
             }
             finally {
@@ -75,7 +96,7 @@ const Page = () => {
 
     const [loading, setLoading] = useState(false)
     const [SelectedPlanIndexValue, setSelectedPlanIndexValue] = useState('');
-    console.log('Selected plan value is', SelectedPlanIndexValue)
+    // console.log('Selected plan value is', SelectedPlanIndexValue)
 
     useEffect(() => {
         let SelectedPlanIndex = null;
@@ -100,7 +121,7 @@ const Page = () => {
             const apiUrl2 = api + '/api/users/cancel_subscription';
             const USERPROFILEDATA = localStorage.getItem('user');
             const UPD = JSON.parse(USERPROFILEDATA);
-            console.log('Data of localstorage is', UPD.user.plan.canceled_at);
+            // console.log('Data of localstorage is', UPD.user.plan.canceled_at);
             const response = await fetch(apiUrl2, {
                 method: 'post',
                 headers: {
@@ -139,23 +160,6 @@ const Page = () => {
     //     var month = date.getMonth() + 1; // Adding 1 since January is 0
     //     var day = date.getDate();
     //     var formattedDate = day + '-' + month + '-' + year;
-
-    useEffect(() => {
-        // console.log('Data from localstorage to check cancellation  plan is', D.user.plan)
-        const timeConverter = () => {
-            let unix_timestamp = PlanStatus; // Example Unix timestamp
-            // let unix_timestamp = 1715850190;
-            var date = new Date(unix_timestamp * 1000);
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1; // Adding 1 since January is 0
-            var day = date.getDate();
-            var formattedDate = day + '-' + month + '-' + year;
-            // setEndtime(formattedDate)
-            setShowCancelTime(formattedDate);
-            console.log(formattedDate);
-        };
-        timeConverter();
-    }, []);
 
     return (
         <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>

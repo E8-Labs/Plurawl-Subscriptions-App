@@ -3,11 +3,14 @@ import { Button, ButtonBase } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Page = () => {
 
     const [DataPassed, setDataPassed] = useState('')
     const [PromoCode, setPromoCode] = useState(null)
+    const [loading, setloading] = useState(false)
+    const [Loading, setLoading] = useState(false)
     console.log('Promocode is', PromoCode)
 
     //code to navigate back
@@ -34,11 +37,11 @@ const Page = () => {
 
     const handleSkipClick = async (event) => {
         try {
-            // setLoading(true);
+            setLoading(true);
             event.preventDefault();
             // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/subscribe';
             let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
-                const apiUrl = api + '/api/users/subscribe';
+            const apiUrl = api + '/api/users/subscribe';
             const userDeatils2 = localStorage.getItem('user');
             const S = JSON.parse(userDeatils2);
             const response = await fetch(apiUrl, {
@@ -52,8 +55,8 @@ const Page = () => {
             if (response.ok) {
                 const subscription = await response.json();
                 const DATA = subscription;
-                console.log('Data of subscribe api is', DATA.data.data[0].plan)
-                if (DATA.data.data[0].plan.active === true) {
+                console.log('Data of subscribe api is', DATA.data.plan)
+                if (DATA.data.plan.active === true) {
                     console.log('Plan is true')
                     router.push('/home/cards/Promo/subscriptioncompleted')
                     // Router.push(`/home/subscriptioncompleted?selectedPlanIndex=${selectedPlanIndex2}`)
@@ -67,7 +70,7 @@ const Page = () => {
         } catch (error) {
             console.log('Error is', error)
         } finally {
-            // setLoading(false);
+            setLoading(false);
         }
     }
 
@@ -75,7 +78,7 @@ const Page = () => {
 
     const handleContinueClick = async (event) => {
         try {
-            // setLoading(true);
+            setloading(true);
             event.preventDefault();
             // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/subscribe';
             let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
@@ -94,7 +97,7 @@ const Page = () => {
                 const subscription = await response.json();
                 const DATA = subscription;
                 console.log('Data of subscribe api is', DATA)
-                if (DATA.data.data[0].plan.active === true) {
+                if (DATA.data.plan.active === true) {
                     console.log('Plan is true')
                     router.push('/home/cards/Promo/subscriptioncompleted')
                     // Router.push(`/home/subscriptioncompleted?selectedPlanIndex=${selectedPlanIndex2}`)
@@ -108,7 +111,7 @@ const Page = () => {
         } catch (error) {
             console.log('Error is', error)
         } finally {
-            // setLoading(false);
+            setloading(false);
         }
     }
 
@@ -123,9 +126,17 @@ const Page = () => {
                         </button>
                     </div>
                     <div>
+
                         <ButtonBase onClick={handleSkipClick} variant="outlined" style={{ color: '#E01F1F' }}>
-                            Skip
+                            {
+                                Loading ?
+                                    <div style={{ height: '20px', width: '20px' }}>
+                                        <CircularProgress />
+                                    </div> :
+                                    'Skip'
+                            }
                         </ButtonBase>
+
                     </div>
                 </div>
                 <div style={{ fontWeight: '500', fontSize: 24, marginTop: 40 }}>
@@ -136,9 +147,14 @@ const Page = () => {
                         placeholder="Enter Promo Code" />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>
-                    <Button onClick={handleContinueClick} variant="outlined" style={{ color: 'white', backgroundColor: 'grey' }}>
-                        Subscribe Plan
-                    </Button>
+                    {loading ?
+                        <div style={{ height: '20px', width: '20px' }}>
+                            <CircularProgress />
+                        </div> :
+                        <Button onClick={handleContinueClick} variant="outlined" style={{ color: 'white', backgroundColor: 'grey' }}>
+                            Subscribe Plan
+                        </Button>
+                    }
                 </div>
             </div>
         </div>
