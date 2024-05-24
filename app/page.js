@@ -8,9 +8,10 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Result } from 'postcss';
 import Slide from '@mui/material/Slide';
 import CircularProgress from '@mui/material/CircularProgress';
+import axios from 'axios';
 
 //pk_test_51JfmvpC2y2Wr4BecD5qeIqkwOaNCMScIgL6TdhNQNoFdNkMbqKhSn3xjrC5K9X483QuMApm7h8uAnjcDW7XMqHmy00vHYLByuW
-let stripePublickKey = process.env.REACT_APP_ENVIRONMENT === "Production" ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
+let stripePublickKey = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Production" ? process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY
 const stripePromise = loadStripe(stripePublickKey);
 
 const Page = () => {
@@ -68,15 +69,62 @@ const Page = () => {
     setError(false)
   }
   useEffect(() => {
+
+    const getProfile = async () => {
+      try {
+          // setCardLoading(true)
+          const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
+          const data = localStorage.getItem('user')
+          const d = JSON.parse(data);
+          const response = await fetch(apiUrl, {
+              method: 'post',
+              headers: {
+                  Authorization: 'Bearer ' + d.token
+              }
+          })
+          console.log('Token recieved is', d.token)
+
+          if (response.ok) {
+              const cards = await response.json();
+              if (cards.status === true) {
+                  let p = cards.data;
+                  d.user = p;
+                localStorage.setItem("user", JSON.stringify(d))
+                if(p.plan !== null){
+                  const status = p.plan.plan.active;
+                  if(status){
+                    router.replace('/home/cards/Promo/subscriptioncompleted')
+                  }
+                  else{
+                    router.replace('/home')
+                  }
+                }
+                else{
+                  router.replace('/home')
+                }
+              } else {
+                  
+              }
+          } else {
+              console.log('Error', response)
+          }
+      } catch (error) {
+          console.log('Error occured is', error)
+      } finally {
+          // setCardLoading(false);
+      }
+  }
     const userData = () => {
       const Data = localStorage.getItem('user');
       const ProfileData = JSON.parse(Data);
       console.log('Data recieved from local storage in status is', ProfileData);
+
       if (ProfileData) {
-        const Status = ProfileData.user.plan.plan;
-        if (Status.active === true) {
-          router.replace('/home/cards/subscriptioncompleted')
-        }
+        // const Status = ProfileData.user.plan.plan;
+        // if (Status.active === true) {
+          getProfile()
+          
+        // }
       } else {
         console.log('Usernot loged in')
       }

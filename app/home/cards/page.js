@@ -66,7 +66,7 @@ const Page = () => {
                     const cards = await response.json();
                     if (cards.status === true) {
                         const i = cards;
-                        setCarddetail(i.data)
+                        setCarddetail(i.data || [])
                         console.log('Data of api is', i)
                     } else {
                         NoCards(true)
