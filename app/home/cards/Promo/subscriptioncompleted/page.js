@@ -58,8 +58,15 @@ const Page = () => {
                                 const month = date.getMonth() + 1; // Adding 1 since January is 0
                                 const day = date.getDate();
                                 const formattedDate = day + '-' + month + '-' + year;
+
+                                
                                 // setEndtime(formattedDate)
-                                setShowCancelTime(formattedDate);
+                                if(PlanSt.plan.remainingDays <= 0){
+                                    setShowCancelTime("Plan expired")
+                                }
+                                else{
+                                    setShowCancelTime(`${PlanSt.plan.remainingDays} days until subscription expires`);
+                                }
                                 console.log(formattedDate);
                             }
                         }

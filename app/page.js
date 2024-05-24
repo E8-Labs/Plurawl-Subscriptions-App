@@ -43,10 +43,16 @@ const Page = () => {
         console.log('Data recieved form api is', data);
         if (data.status === true) {
           localStorage.setItem('user',
-            JSON.stringify(data.data),
-            console.log("Data stored on local storage is", data.data)
+            JSON.stringify(data.data)
           )
-          router.push('/home')
+          let plan = data.data.user.plan;
+          if(plan !== null && plan.status === "active"){
+            router.push('/home/cards/Promo/subscriptioncompleted')
+          }
+          else{
+            router.push('/home')
+          }
+          
         } else {
           console.log('Couldnot login bcz', data.message)
           setError(true)
@@ -84,8 +90,8 @@ const Page = () => {
           d.user = p;
           localStorage.setItem("user", JSON.stringify(d))
           if (p.plan !== null) {
-            const status = p.plan.plan.active;
-            if (status) {
+            const status = p.plan.status;
+            if (status === "active") {
               router.replace('/home/cards/Promo/subscriptioncompleted')
             }
             else {
