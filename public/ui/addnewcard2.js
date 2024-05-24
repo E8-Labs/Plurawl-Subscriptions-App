@@ -85,7 +85,17 @@ function Addnewcard2(props) {
                 console.log("result creating token")
                 console.log("token found is",tok) //contains a card object as well
                 //working until here
-                if (tok.token.id) {
+                 if (tok.error) {
+                    console.log("Error ", tok.error)
+                    //console.log(tok.error)
+                    toast.error(tok.error.message, {
+                        position: "bottom-right",
+                        pauseOnHover: true,
+                        autoClose: 8000,
+                        theme: "dark"
+                    });
+                }
+                else if (tok.token.id) {
 
                     const d = localStorage.getItem(process.env.REACT_APP_LocalSavedUser);
                     const user = JSON.parse(d)
@@ -129,16 +139,7 @@ function Addnewcard2(props) {
                         });
                     }
                 }
-                else if (tok.error) {
-                    //console.log("Error ")
-                    //console.log(tok.error)
-                    toast.error(tok.error, {
-                        position: "bottom-right",
-                        pauseOnHover: true,
-                        autoClose: 8000,
-                        theme: "dark"
-                    });
-                }
+                
             });
 
 
