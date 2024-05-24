@@ -188,10 +188,10 @@ const Page = () => {
                 </div>
                 <div>
                     <div style={{ color: 'white', marginTop: 10, display: 'flex' }}>
-                        <span className='font-bold'>Plan :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.interval === "year" ? <div>Yearly</div> : <div></div>}</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.interval === "year" ? <div>Yearly</div> : <div></div>}</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.interval === "month" ? <div>Monthly</div> : <div></div>}</span>
+                        <span className='font-bold'>Plan :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.interval === "year" ? <div>Yearly</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.interval === "year" ? <div>Yearly</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.interval === "month" ? <div>Monthly</div> : <div></div>}</span>
                     </div>
                     <div style={{ color: 'white', marginTop: 10, display: 'flex' }}>
-                        <span className='font-bold'>Cost :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.amount === 10000 ? <div>$ 100</div> : <div></div>}</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.amount === 2000 ? <div>$ 20</div> : <div></div>}</span>  <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.amount === 5000 ? <div>$ 50</div> : <div></div>}</span>
+                        <span className='font-bold'>Cost :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.amount === 10000 ? <div>$ 100</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.amount === 2000 ? <div>$ 20</div> : <div></div>}</span>  <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.amount === 5000 ? <div>$ 50</div> : <div></div>}</span>
                     </div>
                 </div>
                 {/*<div style={{ color: 'white', fontWeight: '' }}>

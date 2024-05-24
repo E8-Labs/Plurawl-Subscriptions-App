@@ -1,3 +1,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.container {
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensure no outer scroll */
+  }
+  
+  .inner-container {
+    width: 350px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .header {
+    flex-shrink: 0; /* Prevent shrinking */
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .content {
+    flex-grow: 1; /* Allow growing to fill available space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: #ffffff20;
+    border-radius: 25px;
+    padding: 20px;
+  }
+  
+  .plan {
+    border-width: 1px;
+    border-color: #ffffff70;
+    padding: 22px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .plan.selected {
+    border-color: #D44740;
+  }
+  
+  .plan-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .plan-title {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .plan-icon {
+    height: 23px;
+    width: 23px;
+  }
+  
+  .plan-text {
+    font-size: 17px;
+    color: white;
+  }
+  
+  .plan-price {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  
+  .plan-price-subtext {
+    font-size: 13px;
+    color: #F8EDDA50;
+  }
+  
+  .plan-details {
+    padding: 20px 0;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+  }
+  
+  .continue-button {
+    color: white;
+  }
+  

@@ -123,11 +123,12 @@ function Addnewcard2(props) {
                     const data = await axios.request(config);
                     console.log('Token for add card is', i.token)
                     if (data.data.status === true) {
-                        //console.log(data.data); // this will have the whole response from the api with status, message and data
-                        // navigate("/prices")
-                        // props.oncardAdded()
-                        // props.closePopup()
-
+                        // localStorage.setItem('plan', JSON.stringify({ planIndex: selectedPlanIndex }));
+                        const d = localStorage.getItem('user');
+                        let user = JSON.parse(d)
+                        user.user.payment_source_added = true;
+                        
+                        localStorage.setItem('user',JSON.stringify(user))
                         router.push('/home/cards')
                     }
                     else {
@@ -171,9 +172,9 @@ function Addnewcard2(props) {
     }
     // some update
     return (
-        <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
+        <div className="w-full overflow-none" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
 
-            <div style={{ width: '350px', color: 'white' }}>
+            <div style={{ width: '98%', color: 'white' }}>
 
                 <div style={{ display: 'flex', alignItems: 'center', marginTop: 30 }}>
                     <div className='w-1/6' style={{ display: 'flex', alignItems: 'center' }}>
@@ -187,13 +188,14 @@ function Addnewcard2(props) {
                     <div className='w-1/6'></div>
                 </div>
 
-                <form style={{}}>
+                <form className='items-center justify-center' style={{ backgroundColor: 'transparent'}}>
 
                     <div style={{ border: '1px solid black', height: '60px', marginTop: '50px', }}>
                         <CardElement options={{
                             style: {
                                 backgroundColor: 'white',
-                                padding: '10px 20px 11px',
+                                // height: '50px',
+                                // padding: '40px 20px ',
                                 borderRadius: 5,
                                 width: '100%',
                                 boxshadow: '0px 4px 5.5px 0px rgba(0, 0, 0, 0.07)',
@@ -201,14 +203,17 @@ function Addnewcard2(props) {
                                     backgroundColor: "white",
                                     color: 'black',
                                     border: '5px solid blue',
-                                    padding: '20px'
+                                    // padding: '20px',
+                                    fontSize: '16px'
                                     // height: '100%'
                                 },
                             },
                         }} />
 
                     </div>
-                    <button type='submit' onClick={handleSubmit}>Save Card</button>
+                    <div className="flex justify-center mt-6">
+                        <button type='submit' className="w-full max-w-xs py-3 bg-blue-600 rounded-lg text-white font-bold">Save Card</button>
+                    </div>
                 </form>
                 <ToastContainer />
             </div>

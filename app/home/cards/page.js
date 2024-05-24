@@ -114,6 +114,17 @@ const Page = () => {
         else {
             console.log("No data found")
         }
+
+        // localStorage.setItem('plan', JSON.stringify({ planIndex: selectedPlanIndex }));
+        const d = localStorage.getItem('user');
+        const user = JSON.parse(d)
+        console.log("User is ", user)
+        if(user.user.payment_source_added){
+        //   router.push(`/home/cards`);
+        }
+        else{
+          router.push(`/home/addnewcard`);
+        }
     }, []);
 
     //rough code
@@ -189,7 +200,7 @@ const Page = () => {
 
     return (
         // <Suspense>
-        <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
+        <div className="w-full overflow-y-none" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
 
             <div style={{ width: '350px', color: 'white' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50 }}>
@@ -203,13 +214,14 @@ const Page = () => {
                     </div>
                     <div>
                         {
-                            CardLoading ?
-                                <div style={{ height: '20px', width: '20px' }}>
-                                    <CircularProgress />
-                                </div> :
+                            // CardLoading ?
+                            //     <div style={{ height: '20px', width: '20px' }}>
+                            //         <CircularProgress />
+                            //     </div> :
                                 <button onClick={handleAddcard}>
-                                    <div style={{ height: '40px', width: '40px', backgroundColor: '#ffffff80', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' />
+                                    <div style={{ height: '40px', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        {/* <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' /> */}
+                                        <label>Add Card</label>
                                     </div>
                                 </button>
                         }
@@ -276,7 +288,7 @@ const Page = () => {
                 }
 
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}>
-                    <button onClick={handleNextClick} className='w-4/6 bg-green-500' style={{ fontWeight: '500', fontSize: 17, padding: 15, borderRadius: 10, height: '60px' }}>
+                    <button onClick={handleNextClick} className='w-4/6' style={{ fontWeight: '500', fontSize: 17, padding: 15, borderRadius: 10, height: '60px', backgroundColor: '#D44740' }}>
                         Promo Code
                     </button>
                 </div>
