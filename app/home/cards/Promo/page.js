@@ -73,6 +73,7 @@ const Page = () => {
             setLoading(false);
         }
     }
+    //loading should be false when loaded
 
     //handle subscription when promo code is added
 
