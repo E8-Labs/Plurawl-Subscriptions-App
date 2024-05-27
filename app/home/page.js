@@ -117,7 +117,7 @@ const Page = () => {
                 </div>
               </div>
               <div className="plan-details">
-                <div>Enjoy unlimited Journaling for a full month for only $20</div>
+                <div>Enjoy unlimited Coaching for a full 30 days</div>
               </div>
             </div>
           </button>
@@ -133,7 +133,7 @@ const Page = () => {
                 </div>
               </div>
               <div className="plan-details">
-                <div>Enjoy unlimited Journaling for 6 Months for only $99.99</div>
+                <div>Enjoy unlimited Coaching for a full 6 Months</div>
               </div>
             </div>
           </button>
@@ -149,7 +149,7 @@ const Page = () => {
                 </div>
               </div>
               <div className="plan-details">
-                <div>Enjoy unlimited Journaling for a full Year for only $179.99</div>
+                <div>Enjoy unlimited Coaching for a full 12 months</div>
               </div>
             </div>
           </button>
