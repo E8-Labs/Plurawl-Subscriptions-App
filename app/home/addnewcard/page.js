@@ -3,6 +3,7 @@ import React from 'react';
 import Addnewcard2 from '@/public/ui/addnewcard2';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import PaymentForm from '@/public/ui/PaymentForm';
 
 const Page = () => {
   let stripePublickKey = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Production" ? process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY;
@@ -15,6 +16,7 @@ const Page = () => {
   return (
     <Elements stripe={stripePromise}>
       <Addnewcard2 />
+      {/* <PaymentForm /> */}
     </Elements>
   );
 }
