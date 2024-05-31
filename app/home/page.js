@@ -80,8 +80,8 @@ const Page = () => {
   };
 
   return (
-    <div className="container">
-      <div className="inner-container">
+    <div className="container" >
+      <div className="inner-container" style={{backgroundColor: '', width: '100vw'}}>
         <div className="header">
           <div style={{ fontWeight: '500', fontSize: 30, color: 'white' }}>
             Subscribe to a Plan
@@ -104,16 +104,16 @@ const Page = () => {
             </Alert>
           </Snackbar>
         </div>
-        <div className="content">
+        <div className="content" style={{backgroundColor: '', width: '100vw'}}>
           <button onClick={handleSelectClick}>
-            <div className={`plan ${selectPlan ? 'selected' : ''}`}>
+            <div className={`plan ${selectPlan ? 'selected' : ''}`} style={{backgroundColor: ''}}>
               <div className="plan-header">
                 <div className="plan-title">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
                   <div className='plan-text'>Monthly</div>
                 </div>
                 <div className="plan-price">
-                  $20 <span className="plan-price-subtext">/ Month</span>
+                  $19.99 <span className="plan-price-subtext">/ Month</span>
                 </div>
               </div>
               <div className="plan-details">
@@ -123,33 +123,39 @@ const Page = () => {
           </button>
           <button onClick={handleSelectClick2}>
             <div className={`plan ${selectPlan2 ? 'selected' : ''}`}>
-              <div className="plan-header">
-                <div className="plan-title">
+              <div className="plan-header items-center">
+                <div className="plan-title justify-center items-center">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className='plan-text'>6 Months</div>
+                  <div className='plan-text flex flex-col'>
+                    <label>6 Months</label>
+                    <label className='text-xs p-1 capsule rounded' style={{backgroundColor: 'red'}}>21% Discount</label>
+                  </div>
                 </div>
                 <div className="plan-price">
-                  $99.99 <span className="plan-price-subtext">/ Half Year</span>
+                  $99.99 <span className="plan-price-subtext">/ 6 Months</span>
                 </div>
               </div>
               <div className="plan-details">
-                <div>Enjoy unlimited Coaching for a full 6 Months</div>
+                <div>Enjoy unlimited Coaching for a full 6 Months at a discounted cost of $16.50 per month</div>
               </div>
             </div>
           </button>
           <button onClick={handleSelectClick3}>
             <div className={`plan ${selectPlan3 ? 'selected' : ''}`}>
               <div className="plan-header">
-                <div className="plan-title">
+              <div className="plan-title justify-center items-center">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className='plan-text'>Yearly</div>
+                  <div className='plan-text flex flex-col'>
+                    <label>12 Months</label>
+                    <label className='text-xs p-1 capsule rounded' style={{backgroundColor: 'red'}}>25% Discount</label>
+                  </div>
                 </div>
                 <div className="plan-price">
-                  $179.99 <span className="plan-price-subtext">/ Year</span>
+                  $179.99 <span className="plan-price-subtext">/ 12 Months</span>
                 </div>
               </div>
               <div className="plan-details">
-                <div>Enjoy unlimited Coaching for a full 12 months</div>
+                <div>Enjoy unlimited Coaching for a full 12 months at a discounted cost of $15 per month</div>
               </div>
             </div>
           </button>
