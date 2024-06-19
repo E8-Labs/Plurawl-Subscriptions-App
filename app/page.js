@@ -39,6 +39,8 @@ const PageContent = () => {
           const data = Result;
           setWebCodeResponse(data);
           if (data.status === true) {
+            localStorage.setItem('user', JSON.stringify(data.data));
+            
             let plan = data.data.user.plan;
             if (plan !== null && plan.status === "active") {
               router.push('/home/cards/Promo/subscriptioncompleted')
@@ -101,11 +103,11 @@ const PageContent = () => {
       {
         WebCodeLoading ?
           <div style={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100%' }}>
-            <p style={{color: 'white'}}>Authenticating user</p>
+            <p style={{ color: 'white' }}>Authenticating user</p>
             <CircularProgress sx={{ height: '30px' }} />
           </div> :
-          <div style={{ width: '100vw', gap: 150, display: 'flex', flexDirection: 'column',  }}>
-            
+          <div style={{ width: '100vw', gap: 150, display: 'flex', flexDirection: 'column', }}>
+
             <Snackbar
               open={WebCodeError}
               autoHideDuration={2000}

@@ -12,31 +12,33 @@ const Page = () => {
 
   // State variables
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("Select a plan");
   const [loading, setLoading] = useState(false);
   const [selectPlan, setSelectPlan] = useState(false);
   const [selectPlan2, setSelectPlan2] = useState(false);
   const [selectPlan3, setSelectPlan3] = useState(false);
 
   // Functions
-  const handlebackClick = () => {
+  const handleBackClick = () => {
     router.back();
   };
 
   const handleContinueClick = () => {
-    try {
-      setLoading(true);
-      let selectedPlanIndex = -1;
+    setLoading(true);
+    let selectedPlanIndex = -1;
 
-      if (selectPlan) {
-        selectedPlanIndex = 0;
-      } else if (selectPlan2) {
-        selectedPlanIndex = 1;
-      } else if (selectPlan3) {
-        selectedPlanIndex = 2;
-      }
+    if (selectPlan) {
+      selectedPlanIndex = 0;
+    } else if (selectPlan2) {
+      selectedPlanIndex = 1;
+    } else if (selectPlan3) {
+      selectedPlanIndex = 2;
+    }
 
-      if (selectedPlanIndex !== -1) {
-        console.log('Selected plan index is:', selectedPlanIndex);
+    if (selectedPlanIndex !== -1) {
+      console.log('Selected plan index is:', selectedPlanIndex);
+
+      try {
         localStorage.setItem('plan', JSON.stringify({ planIndex: selectedPlanIndex }));
         const d = localStorage.getItem('user');
         const user = JSON.parse(d);
@@ -46,14 +48,18 @@ const Page = () => {
         } else {
           router.push(`/home/cards`);
         }
-      } else {
+      } catch (error) {
+        setErrorMessage(error.message);
         setError(true);
-        console.log('Select a plan');
+        console.log('Error occurred:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.log('Error occurred:', error);
-    } finally {
+    } else {
+      setErrorMessage("Select a plan");
+      setError(true);
       setLoading(false);
+      console.log('Select a plan');
     }
   };
 
@@ -80,8 +86,8 @@ const Page = () => {
   };
 
   return (
-    <div className="container" >
-      <div className="inner-container" style={{backgroundColor: '', width: '100vw'}}>
+    <div className="container">
+      <div className="inner-container" style={{ backgroundColor: '', width: '100vw' }}>
         <div className="header">
           <div style={{ fontWeight: '500', fontSize: 30, color: 'white' }}>
             Subscribe to a Plan
@@ -100,13 +106,13 @@ const Page = () => {
             }}
           >
             <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-              Select a Plan
+              {errorMessage}
             </Alert>
           </Snackbar>
         </div>
-        <div className="content" style={{backgroundColor: '', width: '100vw'}}>
+        <div className="content" style={{ backgroundColor: '', width: '100vw' }}>
           <button onClick={handleSelectClick}>
-            <div className={`plan ${selectPlan ? 'selected' : ''}`} style={{backgroundColor: ''}}>
+            <div className={`plan ${selectPlan ? 'selected' : ''}`} style={{ backgroundColor: '' }}>
               <div className="plan-header">
                 <div className="plan-title">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
@@ -128,7 +134,7 @@ const Page = () => {
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
                   <div className='plan-text flex flex-col'>
                     <label>6 Months</label>
-                    <label className='text-xs p-1 capsule rounded' style={{backgroundColor: 'red'}}>21% Discount</label>
+                    <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>21% Discount</label>
                   </div>
                 </div>
                 <div className="plan-price">
@@ -143,11 +149,11 @@ const Page = () => {
           <button onClick={handleSelectClick3}>
             <div className={`plan ${selectPlan3 ? 'selected' : ''}`}>
               <div className="plan-header">
-              <div className="plan-title justify-center items-center">
+                <div className="plan-title justify-center items-center">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
                   <div className='plan-text flex flex-col'>
                     <label>12 Months</label>
-                    <label className='text-xs p-1 capsule rounded' style={{backgroundColor: 'red'}}>25% Discount</label>
+                    <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>25% Discount</label>
                   </div>
                 </div>
                 <div className="plan-price">
