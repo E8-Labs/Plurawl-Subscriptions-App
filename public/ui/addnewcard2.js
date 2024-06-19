@@ -64,7 +64,7 @@ function Addnewcard2(props) {
                     theme: "dark"
                 });
             } else if (tok.token.id) {
-                const d = localStorage.getItem(process.env.REACT_APP_LocalSavedUser);
+                const d = localStorage.getItem("user");
                 const user = JSON.parse(d);
                 if (user === null) {
                     console.log('User is null');
