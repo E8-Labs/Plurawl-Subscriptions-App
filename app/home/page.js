@@ -116,7 +116,10 @@ const Page = () => {
               <div className="plan-header">
                 <div className="plan-title">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className='plan-text'>Monthly</div>
+                  <div className='flex flex-row justify-center items-center gap-2'>
+                      <label>Monthly</label>
+                      <label style={{fontSize: 10}}>( 7 day free trial )</label>
+                    </div>
                 </div>
                 <div className="plan-price">
                   $19.99 <span className="plan-price-subtext">/ Month</span>
@@ -133,7 +136,10 @@ const Page = () => {
                 <div className="plan-title justify-center items-center">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
                   <div className='plan-text flex flex-col'>
-                    <label>6 Months</label>
+                    <div className='flex flex-row justify-center items-center gap-2'>
+                      <label>6 Months</label>
+                      <label style={{fontSize: 10}}>( 7 day free trial )</label>
+                    </div>
                     <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>21% Discount</label>
                   </div>
                 </div>
@@ -147,12 +153,15 @@ const Page = () => {
             </div>
           </button>
           <button onClick={handleSelectClick3}>
-            <div className={`plan ${selectPlan3 ? 'selected' : ''}`}>
-              <div className="plan-header">
-                <div className="plan-title justify-center items-center">
+            <div className={`plan ${selectPlan3 ? 'selected' : ''} `}>
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex justify-center items-center" >
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className='plan-text flex flex-col'>
-                    <label>12 Months</label>
+                  <div className=' flex flex-col'>
+                    <div className='flex flex-row justify-center items-center gap-1'>
+                      <label>12 Months</label>
+                      <label style={{fontSize: 10}}>( 7 day free trial )</label>
+                    </div>
                     <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>25% Discount</label>
                   </div>
                 </div>

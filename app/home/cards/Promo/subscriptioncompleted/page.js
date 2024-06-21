@@ -9,6 +9,7 @@ const Page = () => {
     const [HideUnsubscribeBtn, setHideUnsubscribeBtn] = useState(false);
     const [ShowCancelTime, setShowCancelTime] = useState(null);
     const [PlanStatus, setPlanStatus] = useState('');
+    const [plan, setPlan] = useState(null)
     // console.log('Value of plastine', PlanStatus)
     useEffect(() => {
         // console.log('Value of PlanStatus:', PlanStatus.plan.canceled_at);
@@ -35,44 +36,45 @@ const Page = () => {
                 if (response.ok) {
                     const DATA = await response.json();
                     const Result = DATA.data.plan.plan;
+                    setPlan(DATA.data.plan)
                     const PlanSt = DATA.data;
                     console.log('Plan is', PlanSt)
                     // if (PlanSt.plan.plan.active === true) {
-                        if (PlanSt.plan.status === "canceled") {
+                    if (PlanSt.plan.status === "canceled") {
 
-                            router.push('/home')
+                        router.push('/home')
 
 
-                        } 
-                        // else if (PlanSt.plan.plan.active === true) {
-                            if (PlanSt.plan.cancel_at_period_end === true) {
-                                setPlanStatus()
-                                setHideUnsubscribeBtn(true)
+                    }
+                    // else if (PlanSt.plan.plan.active === true) {
+                    if (PlanSt.plan.cancel_at_period_end === true) {
+                        setPlanStatus()
+                        setHideUnsubscribeBtn(true)
 
-                                //pick this code
-                                let unix_timestamp = PlanSt.plan.canceled_at; // Time when plan ends Unix timestamp
-                                // console.log('Value for time is', unix_timestampa)
-                                // console.log('Value i am using is 1716488518')
-                                // let unix_timestamp = 1716488518;
-                                const date = new Date(unix_timestamp * 1000);
-                                const year = date.getFullYear();
-                                const month = date.getMonth() + 1; // Adding 1 since January is 0
-                                const day = date.getDate();
-                                const formattedDate = day + '-' + month + '-' + year;
+                        //pick this code
+                        let unix_timestamp = PlanSt.plan.canceled_at; // Time when plan ends Unix timestamp
+                        // console.log('Value for time is', unix_timestampa)
+                        // console.log('Value i am using is 1716488518')
+                        // let unix_timestamp = 1716488518;
+                        const date = new Date(unix_timestamp * 1000);
+                        const year = date.getFullYear();
+                        const month = date.getMonth() + 1; // Adding 1 since January is 0
+                        const day = date.getDate();
+                        const formattedDate = day + '-' + month + '-' + year;
 
-                                
-                                // setEndtime(formattedDate)
-                                if(PlanSt.plan.remainingDays <= 0){
-                                    setShowCancelTime("Plan expired")
-                                }
-                                else{
-                                    setShowCancelTime(`${PlanSt.plan.remainingDays} days until subscription expires`);
-                                }
-                                console.log(formattedDate);
-                            }
-                        // }
-                   
-                        
+
+                        // setEndtime(formattedDate)
+                        if (PlanSt.plan.remainingDays <= 0) {
+                            setShowCancelTime("Plan expired")
+                        }
+                        else {
+                            setShowCancelTime(`${PlanSt.plan.remainingDays} days until subscription expires`);
+                        }
+                        console.log(formattedDate);
+                    }
+                    // }
+
+
                     console.log('Data recieved fron profile api is', Result);
                     //remove
                     console.log('Plansttsua is', PlanSt.plan.canceled_at)
@@ -159,6 +161,78 @@ const Page = () => {
         }
     }
 
+
+    const getTrialDays = ()=>{
+        if ( plan && plan.trial_end) {
+            const trialEndDate = new Date(plan.trial_end * 1000);
+            const currentDate = new Date();
+            const remainingTrialDays = Math.ceil((trialEndDate - currentDate) / (1000 * 60 * 60 * 24));
+            
+            if (remainingTrialDays > 0) {
+              console.log(`Trial period is active. Days remaining: ${remainingTrialDays}`);
+              return remainingTrialDays
+            } else {
+              console.log('Trial period has ended.');
+              return 0
+            }
+          } else {
+            console.log('No trial period.');
+            return 0
+          }
+    }
+    const getPlanCurrentChargePrice = () => {
+        console.log('Price finding', plan)
+
+        if (plan) {
+            console.log('There is a plan')
+            if (plan.status === 'trialing') {
+                console.log('On Trial')
+                let days = getTrialDays()
+                return `Trial: (${days} ${days > 1 ? "days" : "day"} remaining)`
+            }
+            else if (plan.discount) {
+                console.log('There is discount')
+                const { coupon, start, end } = plan.discount;
+
+                console.log(`Coupon ID: ${coupon.id}`);
+                console.log(`Coupon Duration: ${coupon.duration}`);
+                console.log(`Coupon Duration In Months: ${coupon.duration_in_months}`);
+                console.log(`Coupon Valid From: ${new Date(start * 1000).toISOString()}`);
+                console.log(`Coupon Valid To: ${end ? new Date(end * 1000).toISOString() : 'Still active'}`);
+
+                if (coupon.duration === 'repeating' && coupon.duration_in_months) {
+                    console.log(`Coupon is valid for ${coupon.duration_in_months} months.`);
+                } else if (coupon.duration === 'forever') {
+                    console.log('Coupon is valid forever.');
+                } else if (coupon.duration === 'once') {
+                    console.log('Coupon was applied once.');
+                }
+
+                if (end && end < Math.floor(Date.now() / 1000)) {
+                    console.log('The discount has expired.');
+                    let planAmount = plan.plan.amount / 100;
+                    return `$${planAmount}`;
+                } else {
+                    console.log('The discount is still valid.');
+                    let off = plan.discount.coupon.percent_off;
+                    let planAmount = plan.plan.amount / 100;
+                    let amountOff = planAmount * (off / 100);
+                    let chargeAmount = planAmount - amountOff;
+                    return `$${chargeAmount}`;
+                }
+
+            }
+            else {
+                let planAmount = plan.plan.amount / 100;
+                return `$${planAmount}`;
+            }
+        }
+        else {
+            console.log('There is no plan')
+            return "$0"
+        }
+    }
+
     // code for time converter
     // const timeConverter = () => {
     //     let unix_timestamp = 1549312452; // Example Unix timestamp
@@ -191,7 +265,7 @@ const Page = () => {
                         <span className='font-bold'>Plan :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.interval === "year" ? <div>Yearly</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.interval === "halfyear" ? <div>Half Yearly</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.interval === "month" ? <div>Monthly</div> : <div></div>}</span>
                     </div>
                     <div style={{ color: 'white', marginTop: 10, display: 'flex' }}>
-                        <span className='font-bold'>Cost :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.amount === 10000 ? <div>$ 100</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.amount === 2000 ? <div>$ 20</div> : <div></div>}</span>  <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.amount === 5000 ? <div>$ 50</div> : <div></div>}</span>
+                        <span className='font-bold'>Cost :</span> <span style={{ color: 'red', marginLeft: 10 }}>{getPlanCurrentChargePrice()}</span>
                     </div>
                 </div>
                 {/*<div style={{ color: 'white', fontWeight: '' }}>
