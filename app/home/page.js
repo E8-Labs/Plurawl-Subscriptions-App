@@ -23,6 +23,17 @@ const Page = () => {
     router.back();
   };
 
+  //test code
+  const d = localStorage.getItem('user');
+  const user = JSON.parse(d)
+  console.log("User is ", user)
+  // if(user.user.payment_source_added){
+  // //   router.push(`/home/cards`);
+  // }
+  // else{
+  //   router.push(`/home/addnewcard`);
+  // }
+
   const handleContinueClick = () => {
     setLoading(true);
     let selectedPlanIndex = -1;
@@ -47,6 +58,7 @@ const Page = () => {
           router.push(`/home/cards`);
         } else {
           router.push(`/home/cards`);
+          console.log('No payment souce added');
         }
       } catch (error) {
         setErrorMessage(error.message);
@@ -117,9 +129,9 @@ const Page = () => {
                 <div className="plan-title">
                   <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
                   <div className='flex flex-row justify-center items-center gap-2'>
-                      <label>Monthly</label>
-                      <label style={{fontSize: 10}}>( 7 day free trial )</label>
-                    </div>
+                    <label>Monthly</label>
+                    <label style={{ fontSize: 10 }}>( 7 day free trial )</label>
+                  </div>
                 </div>
                 <div className="plan-price">
                   $19.99 <span className="plan-price-subtext">/ Month</span>
@@ -138,7 +150,7 @@ const Page = () => {
                   <div className='plan-text flex flex-col'>
                     <div className='flex flex-row justify-center items-center gap-2'>
                       <label>6 Months</label>
-                      <label style={{fontSize: 10}}>( 7 day free trial )</label>
+                      <label style={{ fontSize: 10 }}>( 7 day free trial )</label>
                     </div>
                     <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>21% Discount</label>
                   </div>
@@ -160,7 +172,7 @@ const Page = () => {
                   <div className=' flex flex-col'>
                     <div className='flex flex-row justify-center items-center gap-1'>
                       <label>12 Months</label>
-                      <label style={{fontSize: 10}}>( 7 day free trial )</label>
+                      <label style={{ fontSize: 10 }}>( 7 day free trial )</label>
                     </div>
                     <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>25% Discount</label>
                   </div>
@@ -175,7 +187,7 @@ const Page = () => {
             </div>
           </button>
           <div className="footer">
-            {loading ? <CircularProgress style={{ color: 'white' }} /> : <Button onClick={handleContinueClick} className="continue-button">
+            {loading ? <CircularProgress style={{ color: 'white' }} /> : <Button onClick={handleContinueClick} sx={{color: '#ffffff', backgroundColor: ' #007bff '}} className="continue-button">
               Continue
             </Button>}
           </div>

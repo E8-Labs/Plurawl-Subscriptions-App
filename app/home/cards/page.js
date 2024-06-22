@@ -6,6 +6,13 @@ import Slide from '@mui/material/Slide';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Button from '@mui/material/Button';
+import Addnewcard2 from '@/public/ui/addnewcard2';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import PaymentForm from '@/public/ui/PaymentForm';
 
 const Page = () => {
 
@@ -102,14 +109,14 @@ const Page = () => {
     // const selectedPlanIndex = router.query;
     // console.log('Router query console:', selectedPlanIndex);
 
-    // // Code for API to load_cards
+    //Code for API to load_cards
     useEffect(() => {
         let data = localStorage.getItem('plan')
 
         if (data) {
             let p = JSON.parse(data);
             console.log("Plan data is ", p)
-            setPlan(p)
+            setPlan(p);
         }
         else {
             console.log("No data found")
@@ -119,68 +126,14 @@ const Page = () => {
         const d = localStorage.getItem('user');
         const user = JSON.parse(d)
         console.log("User is ", user)
-        if(user.user.payment_source_added){
-        //   router.push(`/home/cards`);
+        if (user.user.payment_source_added) {
+            console.log('Card is added');
         }
-        else{
-          router.push(`/home/addnewcard`);
+        else {
+            setOpen(true);
+            console.log('Card is notadded');
         }
     }, []);
-
-    //rough code
-    // const selectedIndex = useSearchParams()
-    // const SI = selectedIndex.get("selectedPlanIndex")
-
-    // let selectedPlanIndex2 = JSON.parse(SI)
-    // console.log('Data recieved from previous screen is', selectedPlanIndex2)
-    // const [searchParams] = useSearchParams();
-    // const dataFromPage1 = searchParams.get('data');
-    // const parsedData = dataFromPage1 ? JSON.parse(dataFromPage1) : null;
-    // console.log("Data from prev screen is ", parsedData)
-
-    //code for subscribing a plan
-    // const handleSubscriptionClick = async (event) => {
-    //     try {
-    //         setLoading(true);
-    //         if (selectedItemId === null) {
-    //             setError(true)
-    //             console.log('Select card');
-    //         } else {
-    //             event.preventDefault();
-    //             const apiUrl = 'https://plurawlapp.com/plurawl/api/users/subscribe';
-    //             const userDeatils2 = localStorage.getItem('user');
-    //             const S = JSON.parse(userDeatils2)
-    //             const response = await fetch(apiUrl, {
-    //                 method: 'post',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     Authorization: 'Bearer ' + S.token
-    //                 },
-    //                 body: JSON.stringify({ 'sub_type': plan.planIndex })
-    //             });
-    //             console.log('Data sending in api is', plan.planIndex);
-    //             if (response.ok) {
-    //                 const subscription = await response.json();
-    //                 const DATA = subscription;
-    //                 console.log('Data of subscribe api is', DATA.data.data[0].plan)
-    //                 if (DATA.data.data[0].plan.active === true) {
-    //                     console.log('Plan is true')
-    //                     router.push('/home/cards/subscriptioncompleted')
-    //                     // Router.push(`/home/subscriptioncompleted?selectedPlanIndex=${selectedPlanIndex2}`)
-    //                     // console.log('Data sent to finalscreen is', selectedPlanIndex2)
-    //                 } else {
-    //                     console.log('Caannot console error')
-    //                 }
-    //             } else {
-    //                 console.log('Unknown error occured')
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.log('Error is', error)
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // }
 
 
     //code for promo click
@@ -197,6 +150,37 @@ const Page = () => {
         }
     }
 
+    //Code for Modal
+    const [open, setOpen] = useState(false);
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+    const handleCloseModal = () => {
+        setOpen(false);
+    };
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '100%',
+        bgcolor: 'background.paper',
+        // border: '2px solid red',
+        boxShadow: 24,
+        pt: 2,
+        px: 4,
+        pb: 3,
+        borderRadius: 5,
+        border: 'none'
+    };
+
+    let stripePublickKey = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Production" ? process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.NEXT_PUBLIC_REACT_APP_STRIPE_PUBLISHABLE_KEY;
+    const stripePromise = loadStripe(stripePublickKey);
+
+    const options = {
+        clientSecret: 'SecretClientBraver0349',
+    };
 
     return (
         // <Suspense>
@@ -210,7 +194,7 @@ const Page = () => {
                         </button>
                     </div>
                     <div style={{ fontSize: 24 }}>
-                        Select Card
+                        <button onClick={handleOpenModal}>Select Card</button>
                     </div>
                     <div>
                         {
@@ -218,12 +202,12 @@ const Page = () => {
                             //     <div style={{ height: '20px', width: '20px' }}>
                             //         <CircularProgress />
                             //     </div> :
-                                <button onClick={handleAddcard}>
-                                    <div style={{ height: '40px', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        {/* <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' /> */}
-                                        <label>Add Card</label>
-                                    </div>
-                                </button>
+                            <button onClick={handleOpenModal}>
+                                <div style={{ height: '40px', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    {/* <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' /> */}
+                                    <label>Add Card</label>
+                                </div>
+                            </button>
                         }
                     </div>
                 </div>
@@ -243,13 +227,13 @@ const Page = () => {
                         direction: 'left'
                     }}
                 >
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '75%' }}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '75%' }}>
                         Add Card for further processing
                     </Alert>
                 </Snackbar>
 
                 {NoCards ?
-                    <div style={{ fontWeight: '500', fontSize: 22, marginTop: 20, textAlign : 'center' }}>
+                    <div style={{ fontWeight: '500', fontSize: 22, marginTop: 20, textAlign: 'center' }}>
                         No Card Available
                     </div> :
                     <div>
@@ -292,6 +276,30 @@ const Page = () => {
                         Promo Code
                     </button>
                 </div>
+                <Modal
+                    open={open}
+                    onClose={handleCloseModal}
+                    aria-labelledby="child-modal-title"
+                    aria-describedby="child-modal-description"
+                >
+                    <Box sx={{ ...style, width: '80%', height: '40vh', backgroundColor: ' #2C3539' }}>
+                        <Elements stripe={stripePromise}>
+                            <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+                                <div style={{ width: '16.66%', display: 'flex', alignItems: 'center' }}>
+                                    <button onClick={handleCloseModal} style={{ display: 'flex', alignItems: 'center' }}>
+                                        <img src='/assets/cross.png' alt='backicon' />
+                                    </button>
+                                </div>
+                                <div style={{ width: '66.66%', display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '24px', fontWeight: '500' }}>
+                                    Add New Card
+                                </div>
+                                <div style={{ width: '16.66%' }}></div>
+                            </div>
+                            <Addnewcard2 close={handleCloseModal} />
+                            {/* <PaymentForm /> */}
+                        </Elements>
+                    </Box>
+                </Modal>
             </div>
         </div>
         // </Suspense>

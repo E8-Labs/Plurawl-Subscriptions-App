@@ -5,7 +5,7 @@ import {
 } from '@stripe/react-stripe-js';
 import Stripe from 'stripe';
 import axios from 'axios';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,9 @@ let stripeKey = process.env.REACT_APP_ENVIRONMENT === "Production" ? process.env
 let envr = process.env.REACT_APP_ENVIRONMENT;
 
 //useful code
-function Addnewcard2(props) {
+function Addnewcard2({ props, close }) {
+
+    const [Loading, setLoading] = useState(false)
 
     const elementOptions = {
         style: {
@@ -47,6 +49,7 @@ function Addnewcard2(props) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
 
         if (!stripeReact || !elements) {
             return;
@@ -88,12 +91,16 @@ function Addnewcard2(props) {
                 console.log("Api response")
                 console.log(data.data)
                 if (data.data.status === true) {
+                    setLoading(false);
                     const d = localStorage.getItem('user');
                     let user = JSON.parse(d);
                     user.user.payment_source_added = true;
                     localStorage.setItem('user', JSON.stringify(user));
-                    router.push('/home/cards');
+                    // router.push('/home/cards');
+                    close();
+                    window.location.reload();
                 } else {
+                    setLoading(false);
                     toast.error(data.data.message, {
                         position: "bottom-right",
                         pauseOnHover: true,
@@ -114,9 +121,11 @@ function Addnewcard2(props) {
         router.back('');
     };
 
+
     return (
-        <div style={{ width: '100%', overflow: 'hidden', backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '100%', maxWidth: '1024px', backgroundColor: 'black', color: 'white' }}>
+        <div style={{ width: '100%', overflow: 'hidden', backgroundColor: '#00000000', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ width: '100%', maxWidth: '1024px', backgroundColor: '#00000000', color: 'white' }}>
+                {/*
                 <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px' }}>
                     <div style={{ width: '16.66%', display: 'flex', alignItems: 'center' }}>
                         <button onClick={handleBackclick} style={{ display: 'flex', alignItems: 'center' }}>
@@ -128,6 +137,7 @@ function Addnewcard2(props) {
                     </div>
                     <div style={{ width: '16.66%' }}></div>
                 </div>
+            */}
 
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '30px' }}>
                     <div style={{ width: '100%', padding: '16px', backgroundColor: '#333', color: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
@@ -146,7 +156,9 @@ function Addnewcard2(props) {
                         </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
-                        <button type='submit' style={{ width: '100%', maxWidth: '320px', padding: '12px', backgroundColor: '#1D4ED8', borderRadius: '8px', color: 'white', fontWeight: 'bold', fontSize: '16px' }}>Save Card</button>
+                        {Loading ? <CircularProgress sx={{ height: '30px' }} /> :
+                            <button type='submit' style={{ width: '100%', maxWidth: '320px', padding: '12px', backgroundColor: '#1D4ED8', borderRadius: '8px', color: 'white', fontWeight: 'bold', fontSize: '16px' }}>Save Card</button>
+                        }
                     </div>
                 </form>
                 <ToastContainer />
