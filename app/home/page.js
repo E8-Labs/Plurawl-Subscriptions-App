@@ -24,9 +24,7 @@ const Page = () => {
   };
 
   //test code
-  const d = localStorage.getItem('user');
-  const user = JSON.parse(d)
-  console.log("User is ", user)
+  
   // if(user.user.payment_source_added){
   // //   router.push(`/home/cards`);
   // }

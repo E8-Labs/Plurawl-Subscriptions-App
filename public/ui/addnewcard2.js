@@ -60,6 +60,7 @@ function Addnewcard2({ props, close }) {
         stripeReact.createToken(cardNumberElement).then(async function (tok) {
             console.log("Token ", tok)
             if (tok.error) {
+                setLoading(false);
                 toast.error(tok.error.message, {
                     position: "bottom-right",
                     pauseOnHover: true,
