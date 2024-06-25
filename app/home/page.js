@@ -24,7 +24,7 @@ const Page = () => {
   };
 
   //test code
-  
+
   // if(user.user.payment_source_added){
   // //   router.push(`/home/cards`);
   // }
@@ -121,7 +121,7 @@ const Page = () => {
           </Snackbar>
         </div>
         <div className="content" style={{ backgroundColor: '', width: '100vw' }}>
-          <button onClick={handleSelectClick}>
+          <button onClick={handleSelectClick} style={{ width: '100%' }}>
             <div className={`plan ${selectPlan ? 'selected' : ''}`} style={{ backgroundColor: '' }}>
               <div className="plan-header">
                 <div className="plan-title">
@@ -185,7 +185,7 @@ const Page = () => {
             </div>
           </button>
           <div className="footer">
-            {loading ? <CircularProgress style={{ color: 'white' }} /> : <Button onClick={handleContinueClick} sx={{color: '#ffffff', backgroundColor: ' #007bff '}} className="continue-button">
+            {loading ? <CircularProgress style={{ color: 'white' }} /> : <Button onClick={handleContinueClick} sx={{ color: '#ffffff', backgroundColor: ' #007bff ' }} className="continue-button">
               Continue
             </Button>}
           </div>

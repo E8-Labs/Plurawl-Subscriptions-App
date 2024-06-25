@@ -37,9 +37,10 @@
   .plan {
     border-width: 1px;
     border-color: #ffffff70;
-    padding: 5px;
+    padding: 15px;
     border-radius: 15px;
     margin-bottom: 20px;
+    height: 150px;
   }
   
   .plan.selected {

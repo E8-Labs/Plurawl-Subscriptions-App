@@ -229,7 +229,7 @@ const Page = () => {
         }
         else {
             console.log('There is no plan')
-            return "$0"
+            return "$0.00"
         }
     }
 
