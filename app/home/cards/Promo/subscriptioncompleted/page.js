@@ -185,7 +185,7 @@ const Page = () => {
 
         if (plan) {
             console.log('There is a plan')
-            if (plan.status === 'trialing') {
+            if (plan.status === 'trialing' || plan.trialStatus === "trialing") {
                 console.log('On Trial')
                 let days = getTrialDays()
                 return `Trial: (${days} ${days > 1 ? "days" : "day"} remaining)`
