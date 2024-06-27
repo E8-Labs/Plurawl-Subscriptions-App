@@ -285,21 +285,23 @@ const Page = () => {
                     aria-labelledby="child-modal-title"
                     aria-describedby="child-modal-description"
                 >
-                    <Box sx={{ ...style, width: '80%', padding: 3, backgroundColor: 'white' }}>
+                    <Box sx={{ ...style, width: '90%', padding: 3, backgroundColor: 'white' }}>
                         <Elements stripe={stripePromise}>
-                            <div style={{ backgroundColor: '#f1f1fe', width: '100%', paddingTop: 6, paddingBottom: 100, paddingRight: 10, paddingLeft: 10, borderRadius: '20px' }}>{/* borderTopLeftRadius: '25px', borderTopRightRadius: '25px', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px' */}
+                            <div style={{ backgroundColor: '#f1f1fe', width: '100%', height: '35vh', paddingTop: 6, paddingBottom: 100, paddingRight: 10, paddingLeft: 10, borderRadius: '20px' }}>{/* borderTopLeftRadius: '25px', borderTopRightRadius: '25px', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px' */}
                                 <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
                                     <div style={{ width: '16.66%', display: 'flex', alignItems: 'center' }}>
                                         <button onClick={handleCloseModal} style={{ display: 'flex', alignItems: 'center' }}>
                                             <img src='/assets/cross.png' alt='backicon' />
                                         </button>
                                     </div>
-                                    <div style={{ width: '66.66%', display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '24px', fontWeight: '500' }}>
+                                    <div style={{ width: '66.66%', display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '24px', fontWeight: '600' }}>
                                         Add New Card
                                     </div>
                                     <div style={{ width: '16.66%' }}></div>
                                 </div>
-                                <div style={{ marginTop: 20 }}><img src='/assets/card.webp' /></div>
+                                <div style={{ marginTop: 20 }}>
+                                    <img style={{height: '70%'}} src='/assets/card.webp' />
+                                </div>
                             </div>
                             <Addnewcard2 close={handleCloseModal} />
                             {/* <PaymentForm /> */}

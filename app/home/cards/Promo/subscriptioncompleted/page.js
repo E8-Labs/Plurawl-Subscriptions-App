@@ -248,16 +248,16 @@ const Page = () => {
 
     const getPlanInterval = () => {
         if (ProfileData.interval_count === 1 && ProfileData.interval === 'month') {
-           
-                return 'Monthly'
-            
+
+            return 'Monthly'
+
         } else if (ProfileData.interval_count === 6 && ProfileData.interval === "month") {
-                return '6 Monthly'
-            
+            return '6 Monthly'
+
         }
         else if (ProfileData.interval_count === 1 && ProfileData.interval === "year") {
             return 'Yearly'
-        
+
         }
     }
 
@@ -267,19 +267,23 @@ const Page = () => {
         }
     }, [intervalTime]);
     return (
-        <div className="w-full" style={{ backgroundColor: 'white', height: '100vh', display: 'flex', justifyContent: 'center' }}>
-
-
-            <div style={{ width: '380px', color: '', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 80 }}>
+        <div className="w-full" style={{ backgroundColor: 'white', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className='flex flex-row w-full h-5 justify-end mt-6'>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                     <div />
                     <p className='font-semibold text-2xl'>
                     </p>
-                    <button onClick={handleLogoutClick} style={{ backgroundColor: '#ffffff70', padding: 12, borderRadius: 10 }}>
+                    <button onClick={handleLogoutClick} style={{ backgroundColor: '#ffffff70', padding: 12, borderRadius: 10,
+                        fontWeight: 'bold'
+                     }}>
                         Log out
                     </button>
                 </div>
-                <div style={{ fontWeight: 'bold', fontSize: 28, marginTop: 80 }}>
+            </div>
+
+            <div style={{ width: '100vw', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 30 }}>
+
+                <div style={{ fontWeight: 'bold', fontSize: 28, marginTop: 30 }}>
                     Thanks for Subscribing
                 </div>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -312,11 +316,14 @@ const Page = () => {
                 <div>
                     {
                         HideUnsubscribeBtn ? ShowCancelTime :
-                            <button onClick={handleUnSubscribe} style={{ backgroundColor: '#D44740', color: 'white', padding: 12, borderRadius: 10, fontSize: '20px' }}>
+                            <button onClick={handleUnSubscribe} style={{ backgroundColor: '#D44740', color: 'white', padding: 12, borderRadius: 10, fontSize: '16px' }}>
                                 {loading ? 'Loading' : 'Cancel subscription'}
                             </button>
                     }
                 </div>
+            </div>
+            <div className='h-5'>
+
             </div>
         </div>
     )

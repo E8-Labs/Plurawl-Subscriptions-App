@@ -140,9 +140,9 @@ function Addnewcard2({ props, close }) {
                     <div style={{ width: '16.66%' }}></div>
                 </div>
             */}
-                <div className='font-semibold text-2xl' style={{ marginTop: '30px' }}>
+                {/* <div className='font-semibold text-2xl' style={{ marginTop: '30px' }}>
                     Add card details
-                </div>
+                </div> */}
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                     <div style={{ width: '100%', padding: '16px', backgroundColor: '#333', color: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

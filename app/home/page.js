@@ -48,6 +48,8 @@ const Page = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
+    slidesToShow: 1,
+    vertical: false,
     slidesToScroll: 1,
     afterChange: (index) => setselectedSlideIndex(index),
     swipe: true,  // enable swipe
@@ -150,7 +152,7 @@ const Page = () => {
     <div className="container">
       <div className="inner-container" style={{ backgroundColor: '', width: '100vw' }}>
         <div className="header">
-          <div style={{ fontWeight: '500', fontSize: 30, color: '' }}>
+          <div style={{ fontWeight: 'bold', fontSize: 30, color: '' }}>
             Subscribe to a Plan
           </div>
 
