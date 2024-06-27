@@ -40,7 +40,7 @@ const PageContent = () => {
           setWebCodeResponse(data);
           if (data.status === true) {
             localStorage.setItem('user', JSON.stringify(data.data));
-            
+
             let plan = data.data.user.plan;
             if (plan !== null && plan.status === "active") {
               router.push('/home/cards/Promo/subscriptioncompleted')
@@ -99,12 +99,12 @@ const PageContent = () => {
   };
 
   return (
-    <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
+    <div className="w-full" style={{ height: '100vh', display: 'flex', justifyContent: 'center', backgroundColor: '#00000030' }}>
       {
         WebCodeLoading ?
           <div style={{ color: 'red', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100%' }}>
             <p style={{ color: 'white' }}>Authenticating user</p>
-            <CircularProgress sx={{ height: '30px' }} />
+            <CircularProgress color='inherit' sx={{ height: '30px' }} />
           </div> :
           <div style={{ width: '100vw', gap: 150, display: 'flex', flexDirection: 'column', }}>
 
@@ -126,8 +126,8 @@ const PageContent = () => {
               </Alert>
             </Snackbar>
 
-            <div className="text-lg font-semibold flex justify-center " style={{ color: 'white', marginTop: 20, backgroundColor: 'transparent' }}>
-              Login
+            <div className="text-3xl font-semibold flex justify-center " style={{ marginTop: 50, backgroundColor: 'transparent' }}>
+              <img src='./assets/PlurawlLogo.png' style={{ width: '350px', height: 'auto', resize: 'cover' }} />
             </div>
             <Snackbar
               open={error}
@@ -147,15 +147,28 @@ const PageContent = () => {
               </Alert>
             </Snackbar>
             <div>
-              <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <input onChange={(e) => setEmail(e.target.value)} className='w-5/6 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10 }} type="email" placeholder="Enter Email" />
-                <input onChange={(e) => setPassword(e.target.value)} className='w-5/6 mt-4 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10 }} type="password" placeholder="Enter Password" />
-                <div>
-                  <button className='font-semibold' onClick={handleSigninclick} style={{ color: 'white', backgroundColor: 'red', height: '50px', width: '100px', borderRadius: 5, marginTop: 30 }}>
-                    {loading ? <div style={{ height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CircularProgress sx={{ height: '30px' }} /></div> : 'Sign in'}
-                  </button>
-                </div>
-              </form>
+              <div className='flex flex-row justify-center'>
+                <p className='text-3xl font-semibold' style={{ width: '80%' }}>
+                  Sign In
+                </p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+                <form style={{ display: 'flex', justifyContent: '', alignItems: '', flexDirection: 'column', width: '80%' }}>
+                  <label className='font-semibold'>
+                    UserEmail :
+                  </label>
+                  <input onChange={(e) => setEmail(e.target.value)} className='w-5/6 mt-3 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10, width: '100%' }} type="email" placeholder="Enter Email" />
+                  <label className='font-semibold mt-4'>
+                    Password :
+                  </label>
+                  <input onChange={(e) => setPassword(e.target.value)} className='w-5/6 mt-3 font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10, width: '100%' }} type="password" placeholder="Enter Password" />
+                  <div style={{ marginTop: 30, display: 'flex', justifyContent: 'center' }}>
+                    <button className='font-semibold' onClick={handleSigninclick} style={{ color: 'white', backgroundColor: 'red', padding: '15px', borderRadius: 25, width: '100%', fontSize: 'larger' }}>
+                      {loading ? <div style={{ height: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><CircularProgress color='inherit' sx={{ height: '30px' }} /></div> : 'Sign in'}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
       }

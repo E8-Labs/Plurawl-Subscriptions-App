@@ -26,7 +26,8 @@ function Addnewcard2({ props, close }) {
             base: {
                 backgroundColor: '#f0f0f0',
                 color: 'black',
-                fontSize: '22px',
+                fontSize: '18px',
+                lineHeight: '40px',
                 '::placeholder': {
                     color: 'gray',
                 },
@@ -125,7 +126,7 @@ function Addnewcard2({ props, close }) {
 
     return (
         <div style={{ width: '100%', overflow: 'hidden', backgroundColor: '#00000000', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '100%', maxWidth: '1024px', backgroundColor: '#00000000', color: 'white' }}>
+            <div style={{ width: '100%', maxWidth: '1024px', backgroundColor: '#00000000', padding: 10 }}>
                 {/*
                 <div style={{ display: 'flex', alignItems: 'center', marginTop: '30px' }}>
                     <div style={{ width: '16.66%', display: 'flex', alignItems: 'center' }}>
@@ -139,26 +140,37 @@ function Addnewcard2({ props, close }) {
                     <div style={{ width: '16.66%' }}></div>
                 </div>
             */}
-
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: '30px' }}>
+                <div className='font-semibold text-2xl' style={{ marginTop: '30px' }}>
+                    Add card details
+                </div>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                     <div style={{ width: '100%', padding: '16px', backgroundColor: '#333', color: 'white', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                             <div style={{ width: '100%' }}>
+                                <div style={{ paddingBottom: 10 }}>
+                                    Card No:
+                                </div>
                                 <CardNumberElement options={elementOptions} style={{ width: '100%', padding: '8px', backgroundColor: 'black', color: 'white', fontSize: '22px', border: '1px solid blue', borderRadius: '4px' }} />
                             </div>
                             <div style={{ display: 'flex', gap: '16px' }}>
                                 <div style={{ flex: 1 }}>
+                                    <div style={{ paddingBottom: 10 }}>
+                                        Expiry Date:
+                                    </div>
                                     <CardExpiryElement options={elementOptions} style={{ width: '100%', padding: '8px', backgroundColor: 'black', color: 'white', fontSize: '22px', border: '1px solid blue', borderRadius: '4px' }} />
                                 </div>
                                 <div style={{ flex: 1 }}>
+                                    <div style={{ paddingBottom: 10 }}>
+                                        CVC:
+                                    </div>
                                     <CardCvcElement options={elementOptions} style={{ width: '100%', padding: '8px', backgroundColor: 'black', color: 'white', fontSize: '22px', border: '1px solid blue', borderRadius: '4px' }} />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
-                        {Loading ? <CircularProgress sx={{ height: '30px' }} /> :
-                            <button type='submit' style={{ width: '100%', maxWidth: '320px', padding: '12px', backgroundColor: '#1D4ED8', borderRadius: '8px', color: 'white', fontWeight: 'bold', fontSize: '16px' }}>Save Card</button>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px', width: '100%' }}>
+                        {Loading ? <CircularProgress color='inherit' sx={{ height: '30px' }} /> :
+                            <button type='submit' style={{ width: '100%',  padding: '12px', backgroundColor: '#D44740', borderRadius: '8px', color: 'white', fontWeight: 'bold', fontSize: '20px' }}>Save Card</button>
                         }
                     </div>
                 </form>

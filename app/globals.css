@@ -4,7 +4,7 @@
 
 
 .container {
-    background-color: black;
+    background-color: #00000030;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -14,7 +14,7 @@
   
   .inner-container {
     width: 350px;
-    color: white;
+    /* color: white; */
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -85,6 +85,7 @@
     display: flex;
     justify-content: center;
     padding: 10px 0;
+    margin-top: 10px;
   }
   
   .continue-button {

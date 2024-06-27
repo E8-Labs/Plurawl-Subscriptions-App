@@ -162,23 +162,23 @@ const Page = () => {
     }
 
 
-    const getTrialDays = ()=>{
-        if ( plan && plan.trial_end) {
+    const getTrialDays = () => {
+        if (plan && plan.trial_end) {
             const trialEndDate = new Date(plan.trial_end * 1000);
             const currentDate = new Date();
             const remainingTrialDays = Math.ceil((trialEndDate - currentDate) / (1000 * 60 * 60 * 24));
-            
+
             if (remainingTrialDays > 0) {
-              console.log(`Trial period is active. Days remaining: ${remainingTrialDays}`);
-              return remainingTrialDays
+                console.log(`Trial period is active. Days remaining: ${remainingTrialDays}`);
+                return remainingTrialDays
             } else {
-              console.log('Trial period has ended.');
-              return 0
+                console.log('Trial period has ended.');
+                return 0
             }
-          } else {
+        } else {
             console.log('No trial period.');
             return 0
-          }
+        }
     }
     const getPlanCurrentChargePrice = () => {
         console.log('Price finding', plan)
@@ -242,29 +242,66 @@ const Page = () => {
     //     var day = date.getDate();
     //     var formattedDate = day + '-' + month + '-' + year;
 
+    //code for showing the time interval
+
+    const [intervalTime, setIntervalTime] = useState(null)
+
+    const getPlanInterval = () => {
+        if (ProfileData.interval_count === 1 && ProfileData.interval === 'month') {
+           
+                return 'Monthly'
+            
+        } else if (ProfileData.interval_count === 6 && ProfileData.interval === "month") {
+                return '6 Monthly'
+            
+        }
+        else if (ProfileData.interval_count === 1 && ProfileData.interval === "year") {
+            return 'Yearly'
+        
+        }
+    }
+
+    useEffect(() => {
+        if (intervalTime !== null) {
+            console.log('Interval time is:', intervalTime);
+        }
+    }, [intervalTime]);
     return (
-        <div className="w-full" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
+        <div className="w-full" style={{ backgroundColor: 'white', height: '100vh', display: 'flex', justifyContent: 'center' }}>
 
 
-            <div style={{ width: '350px', color: 'white', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 80 }}>
-                <div style={{ display: 'flex', position: 'absolute', top: 30, right: 30 }}>
-                    <div>
-                        <button onClick={handleLogoutClick} style={{ backgroundColor: '#ffffff70', padding: 12, borderRadius: 10 }}>
-                            Log out
-                        </button>
-                    </div>
+            <div style={{ width: '380px', color: '', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 80 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <div />
+                    <p className='font-semibold text-2xl'>
+                    </p>
+                    <button onClick={handleLogoutClick} style={{ backgroundColor: '#ffffff70', padding: 12, borderRadius: 10 }}>
+                        Log out
+                    </button>
                 </div>
                 <div style={{ fontWeight: 'bold', fontSize: 28, marginTop: 80 }}>
-                    Subscription completed
+                    Thanks for Subscribing
                 </div>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <img src='/assets/complete.png' alt='Complete' style={{ height: 'auto', width: '100%', maxWidth: '200px' }} />
                 </div>
                 <div>
-                    <div style={{ color: 'white', marginTop: 10, display: 'flex' }}>
-                        <span className='font-bold'>Plan :</span> <span style={{ color: 'red', marginLeft: 10 }}>{ProfileData.interval === "year" ? <div>Yearly</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.interval === "halfyear" ? <div>Half Yearly</div> : <div></div>}</span> <span style={{ color: 'white', marginLeft: 10 }}>{ProfileData.interval === "month" ? <div>Monthly</div> : <div></div>}</span>
+                    <div style={{ color: '', marginTop: 10, display: 'flex' }}>
+                        <span className='font-bold'>Plan :</span>
+                        <span style={{ color: 'red', marginLeft: 10 }}>
+                            {getPlanInterval()}
+                        </span>
+                        {/*<span style={{ color: 'red', marginLeft: 10 }}>
+                            {ProfileData.interval === "year" && ProfileData.interval_count === "1" ? <div>Yearly</div> : <div></div>}
+                        </span>
+                        <span style={{ color: '', marginLeft: 10 }}>
+                            {ProfileData.interval === "halfyear" && ProfileData.interval_count === "6" ? <div>Half Yearly</div> : <div></div>}
+                        </span>
+                        <span style={{ color: '', marginLeft: 10 }}>
+                            {ProfileData.interval === "month" && ProfileData.interval_count === "1" ? <div>Monthly</div> : <div></div>}
+    </span>*/}
                     </div>
-                    <div style={{ color: 'white', marginTop: 10, display: 'flex' }}>
+                    <div style={{ color: '', marginTop: 10, display: 'flex' }}>
                         <span className='font-bold'>Cost :</span> <span style={{ color: 'red', marginLeft: 10 }}>{getPlanCurrentChargePrice()}</span>
                     </div>
                 </div>
@@ -275,7 +312,7 @@ const Page = () => {
                 <div>
                     {
                         HideUnsubscribeBtn ? ShowCancelTime :
-                            <button onClick={handleUnSubscribe} style={{ backgroundColor: '#ffffff70', padding: 12, borderRadius: 10 }}>
+                            <button onClick={handleUnSubscribe} style={{ backgroundColor: '#D44740', color: 'white', padding: 12, borderRadius: 10, fontSize: '20px' }}>
                                 {loading ? 'Loading' : 'Cancel subscription'}
                             </button>
                     }

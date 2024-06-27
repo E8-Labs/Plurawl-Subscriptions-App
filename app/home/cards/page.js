@@ -143,6 +143,7 @@ const Page = () => {
             setError(true);
             console.log('Select card');
         } else {
+            setLoading(true)
             let p = plan;
             p.selectedCard = selectedItemId;
             localStorage.setItem('plan', JSON.stringify(p));
@@ -168,9 +169,9 @@ const Page = () => {
         bgcolor: 'background.paper',
         // border: '2px solid red',
         boxShadow: 24,
-        pt: 2,
-        px: 4,
-        pb: 3,
+        // pt: 2,
+        // px: 4,
+        // pb: 3,
         borderRadius: 5,
         border: 'none'
     };
@@ -184,17 +185,17 @@ const Page = () => {
 
     return (
         // <Suspense>
-        <div className="w-full overflow-y-none" style={{ backgroundColor: 'black', height: '100vh', display: 'flex', justifyContent: 'center' }}>
+        <div className="w-full overflow-y-none" style={{ backgroundColor: '#00000030', height: '100vh', display: 'flex', justifyContent: 'center' }}>
 
-            <div style={{ width: '350px', color: 'white' }}>
+            <div style={{ width: '350px', }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50 }}>
-                    <div style={{ height: '40px', width: '40px', backgroundColor: '#ffffff80', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ height: '40px', width: '40px', backgroundColor: '#00000000', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <button onClick={handleBackIcon}>
-                            <img src='/assets/backicon2.png' style={{ height: '25px', width: '30px' }} alt='backicon' />
+                            <img src='/assets/backicon2.png' alt='backicon' />
                         </button>
                     </div>
-                    <div style={{ fontSize: 24 }}>
-                        <button onClick={handleOpenModal}>Select Card</button>
+                    <div className='font-semibold' style={{ fontSize: 24 }}>
+                        Select Card
                     </div>
                     <div>
                         {
@@ -205,7 +206,7 @@ const Page = () => {
                             <button onClick={handleOpenModal}>
                                 <div style={{ height: '40px', borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     {/* <img src='/assets/plusicon.png' style={{ height: 'auto', width: '100%', maxWidth: '30px' }} alt='Plusicon' /> */}
-                                    <label>Add Card</label>
+                                    <label className='font-medium'>Add Card</label>
                                 </div>
                             </button>
                         }
@@ -216,7 +217,7 @@ const Page = () => {
 
                 <Snackbar
                     open={error}
-                    autoHideDuration={5000}
+                    autoHideDuration={1000}
                     onClose={handleClose}
                     anchorOrigin={{
                         vertical: 'top',
@@ -227,7 +228,7 @@ const Page = () => {
                         direction: 'left'
                     }}
                 >
-                    <Alert onClose={handleClose} severity="error" sx={{ width: '75%' }}>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                         Add Card for further processing
                     </Alert>
                 </Snackbar>
@@ -238,10 +239,10 @@ const Page = () => {
                     </div> :
                     <div>
                         {CardLoading ? <div style={{ display: 'flex', justifyContent: 'center', marginTop: 70 }}><CircularProgress /></div> :
-                            <div style={{ overflow: 'auto', maxHeight: '400px', marginTop: 70 }}>
+                            <div style={{ overflow: 'auto', maxHeight: '600px', marginTop: 70 }}>
                                 {cardDetail.map((item) => (
-                                    <button key={item.id} onClick={() => handleSelect(item.id)} style={{ width: '100%', marginTop: 30 }}>
-                                        <div style={{ color: 'white', height: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: 20, backgroundColor: '#ffffff50' }}>
+                                    <button key={item.id} onClick={() => handleSelect(item.id)} style={{ width: '100%', marginTop: 30, borderRadius: 20, backgroundColor: 'white' }}>
+                                        <div style={{ color: '', height: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: 20, backgroundColor: '#ffffff50' }}>
                                             <div className='w-11/12' style={{ display: 'flex', alignItems: 'center', gap: 15, justifyContent: 'space-between' }}>
                                                 <div style={{ gap: 15, flexDirection: 'column', display: 'flex', }}>
                                                     <div style={{ display: 'flex', gap: 7 }}>
@@ -271,10 +272,12 @@ const Page = () => {
                     </div>
                 }
 
-                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}>
-                    <button onClick={handleNextClick} className='w-4/6' style={{ fontWeight: '500', fontSize: 17, padding: 15, borderRadius: 10, height: '60px', backgroundColor: '#D44740' }}>
-                        Promo Code
-                    </button>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: 27 }}>
+                    {loading ? <CircularProgress color='inherit' /> :
+                        <button onClick={handleNextClick} className='w-4/6 text-xl' style={{ fontWeight: '500', padding: 15, borderRadius: 10, height: '60px', backgroundColor: '#D44740', color: 'white' }}>
+                            Promo Code
+                        </button>
+                    }
                 </div>
                 <Modal
                     open={open}
@@ -282,18 +285,21 @@ const Page = () => {
                     aria-labelledby="child-modal-title"
                     aria-describedby="child-modal-description"
                 >
-                    <Box sx={{ ...style, width: '80%', height: '40vh', backgroundColor: ' #2C3539' }}>
+                    <Box sx={{ ...style, width: '80%', padding: 3, backgroundColor: 'white' }}>
                         <Elements stripe={stripePromise}>
-                            <div style={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
-                                <div style={{ width: '16.66%', display: 'flex', alignItems: 'center' }}>
-                                    <button onClick={handleCloseModal} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <img src='/assets/cross.png' alt='backicon' />
-                                    </button>
+                            <div style={{ backgroundColor: '#f1f1fe', width: '100%', paddingTop: 6, paddingBottom: 100, paddingRight: 10, paddingLeft: 10, borderRadius: '20px' }}>{/* borderTopLeftRadius: '25px', borderTopRightRadius: '25px', borderBottomLeftRadius: '50px', borderBottomRightRadius: '50px' */}
+                                <div style={{ display: 'flex', alignItems: 'center', marginTop: 10 }}>
+                                    <div style={{ width: '16.66%', display: 'flex', alignItems: 'center' }}>
+                                        <button onClick={handleCloseModal} style={{ display: 'flex', alignItems: 'center' }}>
+                                            <img src='/assets/cross.png' alt='backicon' />
+                                        </button>
+                                    </div>
+                                    <div style={{ width: '66.66%', display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '24px', fontWeight: '500' }}>
+                                        Add New Card
+                                    </div>
+                                    <div style={{ width: '16.66%' }}></div>
                                 </div>
-                                <div style={{ width: '66.66%', display: 'flex', justifyContent: 'center', gap: '8px', fontSize: '24px', fontWeight: '500' }}>
-                                    Add New Card
-                                </div>
-                                <div style={{ width: '16.66%' }}></div>
+                                <div style={{ marginTop: 20 }}><img src='/assets/card.webp' /></div>
                             </div>
                             <Addnewcard2 close={handleCloseModal} />
                             {/* <PaymentForm /> */}

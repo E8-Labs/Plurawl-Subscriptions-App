@@ -217,7 +217,7 @@ const Page = () => {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {Loading ?
                         <div style={{ marginTop: 50, }}>
-                            <CircularProgress sx={{ height: '30px' }} />
+                            <CircularProgress color='inherit' sx={{ height: '30px' }} />
                         </div> :
                         <div>
                             <Button onClick={handleContactUs} className='font-semibold' variant='contained' style={{ marginTop: 50, height: 50, fontSize: 20 }}>
