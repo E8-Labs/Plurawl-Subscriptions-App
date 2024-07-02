@@ -26,13 +26,17 @@ const Page = () => {
                 const apiUrl = api + '/api/users/get_profile';
                 const profileData = localStorage.getItem('user');
                 const P = JSON.parse(profileData);
+                console.log("Token ", P.token)
+                setPlan(P.user.plan)
                 const response = await fetch(apiUrl, {
                     method: 'post',
                     headers: {
                         Authorization: 'Bearer ' + P.token,
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    // mode: 'no-cors' // Set the mode to no-cors
                 });
+                console.log("Get Profile ", response)
                 if (response.ok) {
                     const DATA = await response.json();
                     const Result = DATA.data.plan.plan;
@@ -137,6 +141,7 @@ const Page = () => {
                     Authorization: 'Bearer ' + UPD.token,
                     'Content-Type': 'application/json'
                 },
+                
             });
             if (response.ok) {
                 const UNsubscribe = await response.json();
@@ -247,18 +252,25 @@ const Page = () => {
     const [intervalTime, setIntervalTime] = useState(null)
 
     const getPlanInterval = () => {
-        if (ProfileData.interval_count === 1 && ProfileData.interval === 'month') {
+        if (plan) {
+            // console.log("Plan is")
+            if (plan.plan.interval_count === 1 && plan.plan.interval === 'month') {
 
-            return 'Monthly'
+                return 'Monthly'
 
-        } else if (ProfileData.interval_count === 6 && ProfileData.interval === "month") {
-            return '6 Monthly'
+            } else if (plan.plan.interval_count === 6 && plan.plan.interval === "month") {
+                return '6 Monthly'
 
+            }
+            else if (plan.plan.interval_count === 1 && plan.plan.interval === "year") {
+                return 'Yearly'
+
+            }
         }
-        else if (ProfileData.interval_count === 1 && ProfileData.interval === "year") {
-            return 'Yearly'
-
+        else{
+            return "Loading plan"
         }
+
     }
 
     useEffect(() => {
@@ -273,9 +285,10 @@ const Page = () => {
                     <div />
                     <p className='font-semibold text-2xl'>
                     </p>
-                    <button onClick={handleLogoutClick} style={{ backgroundColor: '#ffffff70', padding: 12, borderRadius: 10,
+                    <button onClick={handleLogoutClick} style={{
+                        backgroundColor: '#ffffff70', padding: 12, borderRadius: 10,
                         fontWeight: 'bold'
-                     }}>
+                    }}>
                         Log out
                     </button>
                 </div>
