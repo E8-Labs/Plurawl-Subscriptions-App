@@ -19,78 +19,81 @@ const Page = () => {
     // console.log('Data stored in plact is', PlanStatus.plan);
 
     useEffect(() => {
-        const getProfile = async () => {
-            try {
-                // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
-                let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
-                const apiUrl = api + '/api/users/get_profile';
-                const profileData = localStorage.getItem('user');
-                const P = JSON.parse(profileData);
-                console.log("Token ", P.token)
-                setPlan(P.user.plan)
-                const response = await fetch(apiUrl, {
-                    method: 'post',
-                    headers: {
-                        Authorization: 'Bearer ' + P.token,
-                        'Content-Type': 'application/json'
-                    },
-                    // mode: 'no-cors' // Set the mode to no-cors
-                });
-                console.log("Get Profile ", response)
-                if (response.ok) {
-                    const DATA = await response.json();
-                    const Result = DATA.data.plan.plan;
-                    setPlan(DATA.data.plan)
-                    const PlanSt = DATA.data;
-                    console.log('Plan is', PlanSt)
-                    // if (PlanSt.plan.plan.active === true) {
-                    if (PlanSt.plan.status === "canceled") {
-
-                        router.push('/home')
-
-
-                    }
-                    // else if (PlanSt.plan.plan.active === true) {
-                    if (PlanSt.plan.cancel_at_period_end === true) {
-                        setPlanStatus()
-                        setHideUnsubscribeBtn(true)
-
-                        //pick this code
-                        let unix_timestamp = PlanSt.plan.canceled_at; // Time when plan ends Unix timestamp
-                        // console.log('Value for time is', unix_timestampa)
-                        // console.log('Value i am using is 1716488518')
-                        // let unix_timestamp = 1716488518;
-                        const date = new Date(unix_timestamp * 1000);
-                        const year = date.getFullYear();
-                        const month = date.getMonth() + 1; // Adding 1 since January is 0
-                        const day = date.getDate();
-                        const formattedDate = day + '-' + month + '-' + year;
-
-
-                        // setEndtime(formattedDate)
-                        if (PlanSt.plan.remainingDays <= 0) {
-                            setShowCancelTime("Plan expired")
-                        }
-                        else {
-                            setShowCancelTime(`${PlanSt.plan.remainingDays} days until subscription expires`);
-                        }
-                        console.log(formattedDate);
-                    }
-                    // }
-
-
-                    console.log('Data recieved fron profile api is', Result);
-                    //remove
-                    console.log('Plansttsua is', PlanSt.plan.canceled_at)
-                    setProfileData(Result);
-                }
-            }
-            finally {
-                console.log('');
-            }
-        }
+        
         getProfile();
     }, []);
+
+    const getProfile = async () => {
+        try {
+            // const apiUrl = 'https://plurawlapp.com/plurawl/api/users/get_profile';
+            let api = process.env.NEXT_PUBLIC_REACT_APP_ENVIRONMENT === "Development2" ? "https://bf59-119-156-82-235.ngrok-free.app" : "https://plurawlapp.com/plurawl";
+            const apiUrl = api + '/api/users/get_profile';
+            const profileData = localStorage.getItem('user');
+            const P = JSON.parse(profileData);
+            console.log("Token ", P.token)
+            setPlan(P.user.plan)
+            const response = await fetch(apiUrl, {
+                method: 'post',
+                headers: {
+                    Authorization: 'Bearer ' + P.token,
+                    'Content-Type': 'application/json'
+                },
+                // mode: 'no-cors' // Set the mode to no-cors
+            });
+            console.log("Get Profile ", response)
+            if (response.ok) {
+                const DATA = await response.json();
+                const Result = DATA.data.plan.plan;
+                setPlan(DATA.data.plan)
+                const PlanSt = DATA.data;
+                console.log('Plan is', PlanSt)
+                // if (PlanSt.plan.plan.active === true) {
+                if (PlanSt.plan.status === "canceled") {
+                    router.push('/home')
+                }
+                // else if (PlanSt.plan.plan.active === true) {
+                if (PlanSt.plan.cancel_at_period_end === true) {
+                    console.log("Plan cancels at period end")
+                    setPlanStatus()
+                    setHideUnsubscribeBtn(true)
+
+                    //pick this code
+                    let unix_timestamp = PlanSt.plan.canceled_at; // Time when plan ends Unix timestamp
+                    // console.log('Value for time is', unix_timestampa)
+                    // console.log('Value i am using is 1716488518')
+                    // let unix_timestamp = 1716488518;
+                    const date = new Date(unix_timestamp * 1000);
+                    const year = date.getFullYear();
+                    const month = date.getMonth() + 1; // Adding 1 since January is 0
+                    const day = date.getDate();
+                    const formattedDate = day + '-' + month + '-' + year;
+
+
+                    // setEndtime(formattedDate)
+                    if (PlanSt.plan.remainingDays <= 0) {
+                        setShowCancelTime("Plan expired")
+                    }
+                    else {
+                        setShowCancelTime(`${PlanSt.plan.remainingDays} days until subscription expires`);
+                    }
+                    console.log(formattedDate);
+                }
+                else{
+                    console.log("Plan does not cancel at period end")
+                }
+                // }
+
+
+                console.log('Data recieved fron profile api is', Result);
+                //remove
+                console.log('Plansttsua is', PlanSt.plan.canceled_at)
+                setProfileData(Result);
+            }
+        }
+        finally {
+            console.log('');
+        }
+    }
 
     //code for logout user
 
@@ -146,17 +149,39 @@ const Page = () => {
             if (response.ok) {
                 const UNsubscribe = await response.json();
                 console.log('Data of un subscription is', UNsubscribe);
+                let PlanSt = UNsubscribe.data;
                 // Router.push('/home')
-
+                setLoading(false);
+                setPlan(PlanSt)
+                // getProfile()
                 //code for set time
-                // let unix_timestamp = D.user.plan.canceled_at; // Example Unix timestamp
-                // var date = new Date(unix_timestamp * 1000);
-                // var year = date.getFullYear();
-                // var month = date.getMonth() + 1; // Adding 1 since January is 0
-                // var day = date.getDate();
-                // var formattedDate = day + '-' + month + '-' + year;
-                // // setEndtime(formattedDate)
-                // console.log(formattedDate);
+
+                if (PlanSt.cancel_at_period_end === true) {
+                    console.log("Plan cancels at period end")
+                    setPlanStatus()
+                    setHideUnsubscribeBtn(true)
+
+                    //pick this code
+                    let unix_timestamp = PlanSt.canceled_at; // Time when plan ends Unix timestamp
+                    // console.log('Value for time is', unix_timestampa)
+                    // console.log('Value i am using is 1716488518')
+                    // let unix_timestamp = 1716488518;
+                    const date = new Date(unix_timestamp * 1000);
+                    const year = date.getFullYear();
+                    const month = date.getMonth() + 1; // Adding 1 since January is 0
+                    const day = date.getDate();
+                    const formattedDate = day + '-' + month + '-' + year;
+
+
+                    // setEndtime(formattedDate)
+                    if (PlanSt.remainingDays <= 0) {
+                        setShowCancelTime("Plan expired")
+                    }
+                    else {
+                        setShowCancelTime(`${PlanSt.remainingDays} days until subscription expires`);
+                    }
+                    console.log(formattedDate);
+                }
 
             } else {
                 console.log('There is some issue')

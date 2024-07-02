@@ -300,7 +300,7 @@ const Page = () => {
                                     <div style={{ width: '16.66%' }}></div>
                                 </div>
                                 <div style={{ marginTop: 20 }}>
-                                    <img style={{height: '70%'}} src='/assets/card.webp' />
+                                    <img style={{height: '130'}} src='/assets/card.webp' />
                                 </div>
                             </div>
                             <Addnewcard2 close={handleCloseModal} />

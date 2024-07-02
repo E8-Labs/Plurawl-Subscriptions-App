@@ -61,13 +61,15 @@ const Page = () => {
       userImage: "/assets/download3.png",
       plan: 'Monthly',
       amount: '$19.99 / Month',
-      service: 'Enjoy unlimited Coaching fora full 30 days'
+      discount: '',
+      service: 'Enjoy unlimited Coaching for a full 30 days'
     },
     {
       id: 2,
       userImage: "/assets/download3.png",
       plan: '6 Months',
       amount: '$99.99/ 6 Months',
+      discount: '16.66% Discount',
       service: 'Enjoy unlimited Coaching for a full 6 Months at a discounted cost of $16.50 per month'
     },
     {
@@ -75,6 +77,7 @@ const Page = () => {
       userImage: "/assets/download3.png",
       plan: 'Yearly',
       amount: '$179.99/ 12 Months',
+      discount: '25% Discount',
       service: 'Enjoy unlimited Coaching for a full 12 Months at a discounted cost of $15 per month'
     }
   ];
@@ -164,6 +167,16 @@ const Page = () => {
                 <div key={index} onClick={handleContinueClick}>
                   <div style={{ width: '95%', borderRadius: 15, padding: 20, textAlign: 'start', backgroundColor: 'white', boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)' }}>
                     <button onClick={() => console.log('Working')}>
+                      {
+                        src.discount !== "" &&(
+                          <div style={{flexDirection: 'row', alignItems: 'center', 
+                            justifyContent: 'center', width: '100%', backgroundColor: 'green'}}>
+                            <div style={{ backgroundColor: 'red', height: '40', flex: 1 }}>
+                              <label style={{color: 'white'}}>{src.discount}</label>
+                            </div>
+                          </div>
+                        )
+                      }
                       <div className='flex flex-row justify-center mt-10'>
                         <img src={src.userImage} alt={`Image ${index + 1}`} style={{ resize: 'cover', height: 'auto', width: '50%', borderRadius: '50%' }} />
                       </div>
@@ -174,7 +187,10 @@ const Page = () => {
                         <p style={{ fontWeight: 'bold', fontSize: '14px', marginLeft: 4, marginTop: 3 }}>
                           (7 Days free trial)
                         </p>
-                        <p style={{ fontWeight: 'bold', fontSize: '24px', textAlign: 'center',marginTop: 13 }}>
+                        <p style={{ fontWeight: 'regular', fontSize: '11px', marginLeft: 4, marginTop: 3 }}>
+                          (You will not be charged today)
+                        </p>
+                        <p style={{ fontWeight: 'bold', fontSize: '24px', textAlign: 'center', marginTop: 13 }}>
                           {src.amount}
                         </p>
                         {/*<p style={{ fontWeight: 'bold', fontSize: '20px', textAlign: 'start' }}>
@@ -214,78 +230,7 @@ const Page = () => {
             </Alert>
           </Snackbar>
         </div>
-        {/* 
-      <div className="content" style={{ backgroundColor: '', width: '100vw' }}>
-          <button onClick={handleSelectClick} style={{ width: '100%' }}>
-            <div className={`plan ${selectPlan ? 'selected' : ''}`} style={{ backgroundColor: '' }}>
-              <div className="plan-header">
-                <div className="plan-title">
-                  <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className='flex flex-row justify-center items-center gap-2'>
-                    <label>Monthly</label>
-                    <label style={{ fontSize: 10 }}>( 7 day free trial )</label>
-                  </div>
-                </div>
-                <div className="plan-price">
-                  $19.99 <span className="plan-price-subtext">/ Month</span>
-                </div>
-              </div>
-              <div className="plan-details">
-                <div>Enjoy unlimited Coaching for a full 30 days</div>
-              </div>
-            </div>
-          </button>
-          <button onClick={handleSelectClick2}>
-            <div className={`plan ${selectPlan2 ? 'selected' : ''}`}>
-              <div className="plan-header items-center">
-                <div className="plan-title justify-center items-center">
-                  <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className='plan-text flex flex-col'>
-                    <div className='flex flex-row justify-center items-center gap-2'>
-                      <label>6 Months</label>
-                      <label style={{ fontSize: 10 }}>( 7 day free trial )</label>
-                    </div>
-                    <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>21% Discount</label>
-                  </div>
-                </div>
-                <div className="plan-price">
-                  $99.99 <span className="plan-price-subtext">/ 6 Months</span>
-                </div>
-              </div>
-              <div className="plan-details">
-                <div>Enjoy unlimited Coaching for a full 6 Months at a discounted cost of $16.50 per month</div>
-              </div>
-            </div>
-          </button>
-          <button onClick={handleSelectClick3}>
-            <div className={`plan ${selectPlan3 ? 'selected' : ''} `}>
-              <div className="flex flex-row justify-between items-center">
-                <div className="flex justify-center items-center" >
-                  <img src='/assets/subscriptionicon.png' alt='Subscriptionicon' className="plan-icon" />
-                  <div className=' flex flex-col'>
-                    <div className='flex flex-row justify-center items-center gap-1'>
-                      <label>12 Months</label>
-                      <label style={{ fontSize: 10 }}>( 7 day free trial )</label>
-                    </div>
-                    <label className='text-xs p-1 capsule rounded' style={{ backgroundColor: 'red' }}>25% Discount</label>
-                  </div>
-                </div>
-                <div className="plan-price">
-                  $179.99 <span className="plan-price-subtext">/ 12 Months</span>
-                </div>
-              </div>
-              <div className="plan-details">
-                <div>Enjoy unlimited Coaching for a full 12 months at a discounted cost of $15 per month</div>
-              </div>
-            </div>
-          </button>
-          <div className="footer">
-            {loading ? <CircularProgress style={{ color: '' }} /> : <Button onClick={handleContinueClick} sx={{ color: '#ffffff', backgroundColor: ' #007bff ' }} className="continue-button">
-              Continue
-            </Button>}
-          </div>
-        </div>
-      */}
+        
       </div>
     </div>
   );
