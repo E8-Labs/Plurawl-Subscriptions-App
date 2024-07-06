@@ -1,7 +1,7 @@
 'use client'
 import { Button, ButtonBase } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,7 +16,9 @@ const Page = () => {
     const [Loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [promoCodeError, setPromoCodeError] = useState(null);
-    console.log('Promocode is', PromoCode);
+
+    const timerRef = useRef(null);
+    // console.log('Promocode is', PromoCode);
 
     //code to navigate back
     const router = useRouter();
@@ -90,8 +92,8 @@ const Page = () => {
     //handle subscription when promo code is added
 
     const handleContinueClick = async (event) => {
-        if (PromoCode.length === 0) {
-            setloading(true);
+        if (PromoCode.length === 0 || promoCodeError) {
+            setloading(false);
             setError(true)
         } else {
             try {
@@ -166,11 +168,26 @@ const Page = () => {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            console.log('timeot for promocode is trigering');
-            getPromocodeAvailable()
-        }, 300);
-    }, [PromoCode])
+        // Clear the previous timer if PromoCode changes
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+
+        // Set a new timer
+        timerRef.current = setTimeout(() => {
+            console.log('Timeout for promocode is triggering');
+            if (PromoCode !== "") {
+                getPromocodeAvailable();
+            }
+        }, 500);
+
+        // Clean up the timer when the component unmounts
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, [PromoCode]);
 
     return (
         <div className="w-full" style={{ backgroundColor: '#00000030', height: '100vh', display: 'flex', justifyContent: 'center' }}>
@@ -206,16 +223,16 @@ const Page = () => {
                         placeholder="Enter Promo Code" />
                 </div>
                 <div>
-                {
+                {/* {
                     promoCodeError === false && 
                     <div className='font-medium text-xl' style={{color: 'green'}}>
                         PromoCode is valid
                     </div>
-                }
+                } */}
                 {
                     promoCodeError === true && 
-                    <div className='font-medium text-xl' style={{color: 'red'}}>
-                        PromoCode is inValid
+                    <div className='pt-2' style={{color: 'red', fontSize: 11}}>
+                        Invalid coupon code
                     </div>
                 }
                 </div>
