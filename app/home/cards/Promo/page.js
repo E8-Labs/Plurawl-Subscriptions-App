@@ -10,12 +10,13 @@ import Slide from '@mui/material/Slide';
 
 const Page = () => {
 
-    const [DataPassed, setDataPassed] = useState('')
-    const [PromoCode, setPromoCode] = useState('')
-    const [loading, setloading] = useState(false)
-    const [Loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
-    console.log('Promocode is', PromoCode)
+    const [DataPassed, setDataPassed] = useState('');
+    const [PromoCode, setPromoCode] = useState('');
+    const [loading, setloading] = useState(false);
+    const [Loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [promoCodeError, setPromoCodeError] = useState(null);
+    console.log('Promocode is', PromoCode);
 
     //code to navigate back
     const router = useRouter();
@@ -132,6 +133,45 @@ const Page = () => {
         }
     }
 
+    //code for checking that promocode is valid or not
+
+    const getPromocodeAvailable = async () => {
+        try {
+            const userDeatils2 = localStorage.getItem('user');
+            const T = JSON.parse(userDeatils2);
+            const ApiUrl = `https://plurawlapp.com/plurawl/api/users/is_coupon_valid?coupon=${PromoCode}`;
+            console.log("Promo api ", ApiUrl)
+            const response = await fetch(ApiUrl, {
+                method: 'post',
+                
+            });
+            console.log('Response of api is :', response);
+            if (response.ok) {
+                const result = await response.json();
+                if (result.status === true) {
+                    console.log('Promocode is :', result.message);
+                    setPromoCodeError(false);
+                } else if (result.status === false) {
+                    console.log('Promocde is :', result.message);
+                    setPromoCodeError(true);
+                } else {
+                    console.log('There is some error');
+                }
+            } else {
+                console.log('Response of api is not correct');
+            }
+        } catch (error) {
+            console.log('Error ocured while calling api is:', error);
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            console.log('timeot for promocode is trigering');
+            getPromocodeAvailable()
+        }, 300);
+    }, [PromoCode])
+
     return (
         <div className="w-full" style={{ backgroundColor: '#00000030', height: '100vh', display: 'flex', justifyContent: 'center' }}>
             <div style={{ width: '350px', }}>
@@ -156,11 +196,28 @@ const Page = () => {
                     </div>
                 </div>
                 <div style={{ fontWeight: '500', fontSize: 24, marginTop: 40 }}>
-                    Add Your Promo Code:
+                    Add Your Promo Code :
                 </div>
                 <div>
-                    <input onChange={(e) => setPromoCode(e.target.value)} type='text' className='w-full font-semibold' style={{ outline: 'none', padding: '15px', borderRadius: 10, color: '#333333', marginTop: 50 }}
+                    <input
+                        onChange={(e) => setPromoCode(e.target.value)}
+                        type='text' className='w-full font-semibold'
+                        style={{ outline: 'none', padding: '15px', borderRadius: 10, color: '#333333', marginTop: 50 }}
                         placeholder="Enter Promo Code" />
+                </div>
+                <div>
+                {
+                    promoCodeError === false && 
+                    <div className='font-medium text-xl' style={{color: 'green'}}>
+                        PromoCode is valid
+                    </div>
+                }
+                {
+                    promoCodeError === true && 
+                    <div className='font-medium text-xl' style={{color: 'red'}}>
+                        PromoCode is inValid
+                    </div>
+                }
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>
                     {loading ?
