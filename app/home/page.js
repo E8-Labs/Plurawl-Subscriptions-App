@@ -109,11 +109,15 @@ const Page = () => {
         const d = localStorage.getItem("user");
         const user = JSON.parse(d);
         console.log("User is ", user);
-        if (user.user.payment_source_added) {
-          router.push(`/home/cards`);
+        if (user) {
+          if (user.user.payment_source_added) {
+            router.push(`/home/cards`);
+          } else {
+            router.push(`/home/cards`);
+            console.log("No payment souce added");
+          }
         } else {
-          router.push(`/home/cards`);
-          console.log("No payment souce added");
+          router.push(`/`);
         }
       } catch (error) {
         setErrorMessage(error.message);
